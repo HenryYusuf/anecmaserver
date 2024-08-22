@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('email_suami')->nullable();
 
             // Role
-            $table->enum('role', ['admin', 'istri', 'suami'])->default('istri');
+            $table->enum('role', ['admin', 'istri', 'suami', 'petugas'])->default('istri');
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

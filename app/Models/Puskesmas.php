@@ -13,4 +13,9 @@ class Puskesmas extends Model
         'nama_puskesmas',
         'alamat'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'petugas_puskesmas', 'puskesmas_id', 'user_id');
+    }
 }

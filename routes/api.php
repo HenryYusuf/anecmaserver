@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Api\Admin\DashboardController;
+use App\Http\Controllers\Api\Admin\PetugasController;
+use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
@@ -44,4 +47,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Reminder TTd
     Route::post('/istri/dashboard/reminder-ttd', [ReminderTtdController::class, 'setReminderTtd']);
+
+    /*==== Admin ==== */
+    // Admin Dashboard
+    Route::get('/admin/dashboard-card-hitung-data', [DashboardController::class, 'hitungData']);
+    Route::get('/admin/dashboard-data-terbaru', [DashboardController::class, 'dataTerbaru']);
+
+    // Admin Data Puskesmas
+    Route::get('/admin/data-puskesmas', [PuskesmasController::class, 'dataPuskesmas']);
+
+    // Admin Data Petugas Puskesmas
+    Route::get('/admin/data-petugas-puskesmas', [PetugasController::class, 'dataPetugasPuskesmas']);
 });

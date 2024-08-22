@@ -56,4 +56,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function resikoAnemia()
+    {
+        return $this->hasMany(ResikoAnemia::class);
+    }
+
+    public function puskesmas()
+    {
+        return $this->belongsToMany(Puskesmas::class, 'petugas_puskesmas', 'user_id', 'puskesmas_id');
+    }
 }

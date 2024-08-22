@@ -33,14 +33,14 @@ class AuthController extends BaseController
             'role' => 'admin',
         ]);
 
-        $petugasPuskesmas = PetugasPuskesmas::create([
-            'user_id' => $adminUser->id,
-            'puskesmas_id' => $input['puskesmas_id'],
-        ]);
+        // $petugasPuskesmas = PetugasPuskesmas::create([
+        //     'user_id' => $adminUser->id,
+        //     'puskesmas_id' => $input['puskesmas_id'],
+        // ]);
 
-        $result = [$adminUser, $petugasPuskesmas];
+        // $result = [$adminUser, $petugasPuskesmas];
 
-        return $this->sendResponse($result, 'Admin account created successfully.');
+        return $this->sendResponse($adminUser, 'Admin account created successfully.');
     }
 
     public function adminLogin(Request $request)

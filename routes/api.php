@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
 use App\Http\Controllers\Api\Dashboard\ReminderTtdController;
 use App\Http\Controllers\Api\Profil\ProfilController;
-use App\Models\Puskesmas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +22,6 @@ Route::post('/istri/login-token', [AuthController::class, 'istriLoginToken']);
 // Admin Register & Login
 Route::post('/admin/register', [AdminAuthController::class, 'adminRegister']);
 Route::post('/admin/login', [AdminAuthController::class, 'adminLogin']);
-
-// Insert Puskesmas
-Route::post('/puskesmas/insert', function (Request $request) {
-    Puskesmas::create($request->all());
-});
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -55,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Admin Data Puskesmas
     Route::get('/admin/data-puskesmas', [PuskesmasController::class, 'dataPuskesmas']);
+    Route::post('/admin/data-puskesmas/insert', [PuskesmasController::class, 'insertPuskesmas']);
 
     // Admin Data Petugas Puskesmas
     Route::get('/admin/data-petugas-puskesmas', [PetugasController::class, 'dataPetugasPuskesmas']);

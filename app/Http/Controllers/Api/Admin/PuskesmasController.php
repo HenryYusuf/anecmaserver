@@ -15,4 +15,13 @@ class PuskesmasController extends BaseController
         $puskesmas = Puskesmas::get();
         return $this->sendResponse($puskesmas, 'Get data successfully.');
     }
+
+    public function insertPuskesmas(Request $request)
+    {
+        $input = $request->all();
+
+        $puskesmas = Puskesmas::create($input);
+
+        return $this->sendResponse($puskesmas, 'Get data successfully.');
+    }
 }

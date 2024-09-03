@@ -50,7 +50,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // Admin Data Puskesmas
     Route::get('/admin/data-puskesmas', [PuskesmasController::class, 'dataPuskesmas']);
     Route::post('/admin/data-puskesmas/insert', [PuskesmasController::class, 'insertPuskesmas']);
+    Route::get('/admin/data-puskesmas/show/{id}', [PuskesmasController::class, 'showPuskesmas']);
+    Route::post('/admin/data-puskesmas/update/{id}', [PuskesmasController::class, 'updatePuskesmas']);
+    Route::post('/admin/data-puskesmas/delete/{id}', [PuskesmasController::class, 'deletePuskesmas']);
 
     // Admin Data Petugas Puskesmas
     Route::get('/admin/data-petugas-puskesmas', [PetugasController::class, 'dataPetugasPuskesmas']);
+    Route::post('/admin/data-petugas-puskesmas/insert', [PetugasController::class, 'insertPetugasPuskesmas']);
+    // Route::get('/admin/data-puskesmas/show/{id}', [PuskesmasController::class, 'showPuskesmas']);
+    // Route::post('/admin/data-puskesmas/update/{id}', [PuskesmasController::class, 'updatePuskesmas']);
+    // Route::post('/admin/data-puskesmas/delete/{id}', [PuskesmasController::class, 'deletePuskesmas']);
 });

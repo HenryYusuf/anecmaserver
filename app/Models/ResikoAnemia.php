@@ -11,6 +11,10 @@ class ResikoAnemia extends Model
 
     protected $table = 'resiko_anemia';
 
+    protected $fillable = [
+        'user_id', 'usia_kehamilan', 'jumlah_anak', 'riwayat_anemia', 'konsumsi_ttd_7hari', 'hasil_hb', 'resiko',
+    ];
+
     public function userResiko()
     {
         return $this->belongsTo(User::class);

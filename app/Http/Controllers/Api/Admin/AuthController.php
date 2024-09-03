@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
-use App\Models\PetugasPuskesmas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +17,7 @@ class AuthController extends BaseController
         $validator = Validator::make($input, [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -45,6 +43,12 @@ class AuthController extends BaseController
 
     public function adminLogin(Request $request)
     {
+        $checkUser = User::where('email', $request->email)->first();
+
+        if (!$checkUser || $checkUser->role != "admin") {
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
 
@@ -54,7 +58,7 @@ class AuthController extends BaseController
             }
 
             $success['token'] = $user->createToken('adminToken')->plainTextToken;
-            $success['name'] =  $user->name;
+            $success['name'] = $user->name;
             return $this->sendResponse($success, 'Admin login successfully.');
         } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Dashboard\JurnalMakanController;
 use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
 use App\Http\Controllers\Api\Dashboard\ReminderTtdController;
@@ -23,7 +24,6 @@ Route::post('/istri/login-token', [AuthController::class, 'istriLoginToken']);
 Route::post('/admin/register', [AdminAuthController::class, 'adminRegister']);
 Route::post('/admin/login', [AdminAuthController::class, 'adminLogin']);
 
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/login', [AuthController::class, 'istriLogin']);
     Route::get('/istri/get-user', [AuthController::class, 'getUser']);
@@ -41,6 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Reminder TTd
     Route::post('/istri/dashboard/reminder-ttd', [ReminderTtdController::class, 'setReminderTtd']);
+
+    // Jurnal Makan
+    Route::get('/istri/dashboard/get-jurnal-makan', [JurnalMakanController::class, 'getJurnalMakan']);
+    Route::post('/istri/dashboard/jurnal-makan', [JurnalMakanController::class, 'insertJurnalMakan']);
 
     /*==== Admin ==== */
     // Admin Dashboard

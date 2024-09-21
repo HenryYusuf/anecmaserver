@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Puskesmas::class, 'petugas_puskesmas', 'user_id', 'puskesmas_id');
     }
+
+    public function reminder_ttd()
+    {
+        return $this->hasOne(ReminderTtd::class);
+    }
 }

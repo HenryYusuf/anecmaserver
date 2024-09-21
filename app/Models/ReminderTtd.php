@@ -18,4 +18,9 @@ class ReminderTtd extends Model
         'waktu_reminder_2',
         'is_active_reminder_2',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

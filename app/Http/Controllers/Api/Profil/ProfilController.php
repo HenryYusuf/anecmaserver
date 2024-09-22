@@ -91,7 +91,7 @@ class ProfilController extends BaseController
             $passwordSuami = bcrypt('suami123');
 
             User::create([
-                'name' => 'Suami',
+                'name' => '$input[nama_suami]',
                 'email' => $input['email_suami'],
                 'password' => $passwordSuami,
                 'role' => 'suami'

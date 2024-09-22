@@ -60,6 +60,54 @@ class AuthController extends BaseController
 
     public function getUser()
     {
-        return $this->sendResponse(Auth::user(), 'User retrieved successfully.');
+        $user = Auth::user();
+
+        $results = User::where('email', $user->email)->with('resikoAnemia', 'riwayat_hb')->first();
+
+        return $this->sendResponse($results, 'User retrieved successfully.');
+    }
+
+    public function suamiLogin(Request $request)
+    {
+        $checkUser = User::where('email', $request->email)->first();
+
+        if (!$checkUser || $checkUser->role != "suami") {
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+
+            if ($user->role !== 'suami') {
+                Auth::logout();
+                return $this->sendError('Unauthorised.', ['error' => 'Only suami can login.']);
+            }
+
+            $success['token'] = $user->createToken('suamiToken')->plainTextToken;
+            $success['name'] = $user->name;
+            return $this->sendResponse($success, 'Suami login successfully.');
+        } else {
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+    }
+
+    public function getUserSuami()
+    {
+        $user = Auth::user();
+
+        $wife = User::where('email', $user->email)->with('wives')->first();
+
+        $wifeEmail = $wife->wives->first()->email;
+
+        $dataWife = User::where('email', $wifeEmail)->with('resikoAnemia', 'riwayat_hb')->first();
+
+        $results = [
+            'user' => $user,
+            'dataWife' => $dataWife
+        ];
+        // $results = User::where('email')
+
+
+        return $this->sendResponse($results, 'User retrieved successfully.');
     }
 }

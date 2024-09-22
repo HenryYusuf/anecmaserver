@@ -71,4 +71,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(ReminderTtd::class);
     }
+
+    public function wives()
+    {
+        return $this->hasMany(User::class, 'email_suami', 'email');
+    }
+
+    public function riwayat_hb()
+    {
+        return $this->hasOne(CekHb::class)->latestOfMany();
+    }
 }

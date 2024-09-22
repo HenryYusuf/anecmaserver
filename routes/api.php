@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Dashboard\CekHbController;
 use App\Http\Controllers\Api\Dashboard\JurnalMakanController;
 use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
@@ -19,6 +20,9 @@ Route::get('/user', function (Request $request) {
 
 // Istri Login
 Route::post('/istri/login-token', [AuthController::class, 'istriLoginToken']);
+
+// Suami Login
+Route::post('/suami/login-token', [AuthController::class, 'suamiLogin']);
 
 // Admin Register & Login
 Route::post('/admin/register', [AdminAuthController::class, 'adminRegister']);
@@ -45,6 +49,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // Jurnal Makan
     Route::get('/istri/dashboard/get-jurnal-makan', [JurnalMakanController::class, 'getJurnalMakan']);
     Route::post('/istri/dashboard/jurnal-makan', [JurnalMakanController::class, 'insertJurnalMakan']);
+
+    // Riwayat HB
+    Route::get('/istri/dashboard/get-hb-terbaru', [CekHbController::class, 'getHbTerbaru']);
+    Route::post('/istri/dashboard/insert-riwayat-hb', [CekHbController::class, 'insertRiwayatHb']);
+
+    /*==== Suami ==== */
+    Route::get('/suami/get-user', [AuthController::class, 'getUserSuami']);
 
     /*==== Admin ==== */
     // Admin Dashboard

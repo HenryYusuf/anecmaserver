@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/dashboard/konsumsi-ttd', [KonsumsiTtdController::class, 'konsumsiTablet']);
 
     // Reminder TTd
+    Route::get('/istri/dashboard/get-user-reminder-ttd', [ReminderTtdController::class, 'getUserReminderTtd']);
     Route::post('/istri/dashboard/reminder-ttd', [ReminderTtdController::class, 'setReminderTtd']);
 
     // Jurnal Makan

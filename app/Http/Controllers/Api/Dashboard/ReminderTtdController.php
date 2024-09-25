@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ReminderTtdController extends BaseController
 {
+    public function getUserReminderTtd()
+    {
+        $user = Auth::user();
+
+        $reminder = ReminderTtd::where('user_id', $user->id)->first();
+
+        return $this->sendResponse($reminder, 'Reminder TTD retrieved successfully.');
+    }
+
     public function setReminderTtd(Request $request)
     {
         $input = $request->all();

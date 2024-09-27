@@ -15,5 +15,7 @@ class CekHb extends Model
         'user_id',
         'tanggal',
         'nilai_hb',
+        'usia_kehamilan',
+        'hasil_pemeriksaan'
     ];
 }

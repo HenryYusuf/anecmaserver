@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Riwayat HB
     Route::get('/istri/dashboard/get-hb-terbaru', [CekHbController::class, 'getHbTerbaru']);
+    Route::get('/istri/dashboard/get-count-cek-hb', [CekHbController::class, 'getCountCekHb']);
     Route::post('/istri/dashboard/insert-riwayat-hb', [CekHbController::class, 'insertRiwayatHb']);
 
     /*==== Suami ==== */

@@ -19,12 +19,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('usia')->nullable();
             $table->string('no_hp')->nullable();
-            // Data Kehamilan
-            $table->date('hari_pertama_haid')->nullable();
-            $table->string('tempat_tinggal_ktp')->nullable();
+            $table->text('tempat_tinggal_ktp')->nullable();
             $table->string('tempat_tinggal_domisili')->nullable();
             $table->string('pendidikan_terakhir')->nullable();
             $table->string('pekerjaan')->nullable();
+            // Data Kehamilan
+            $table->date('hari_pertama_haid')->nullable();
+            $table->string('wilayah_binaan')->nullable();
+            $table->string('kelurahan')->nullable();
+            $table->string('desa')->nullable();
+            $table->string('tempat_periksa_kehamilan')->nullable();
             // Data Suami
             $table->string('nama_suami')->nullable();
             $table->string('no_hp_suami')->nullable();

@@ -62,7 +62,18 @@ class AuthController extends BaseController
     {
         $user = Auth::user();
 
-        $results = User::where('email', $user->email)->with('resikoAnemia', 'riwayat_hb')->first();
+        $userData = User::where('email', $user->email)->with('resikoAnemia', 'riwayat_hb')->first();
+
+        $hariPertamaHaid = $userData->hari_pertama_haid;
+        $startDate = Carbon::create($hariPertamaHaid);
+        $currentDate = Carbon::now();
+
+        $weekPassed = floor($startDate->diffInWeeks($currentDate));
+
+        $results = [
+            'user' => $userData,
+            'umur_kehamilan' => $weekPassed
+        ];
 
         return $this->sendResponse($results, 'User retrieved successfully.');
     }

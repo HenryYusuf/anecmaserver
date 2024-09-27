@@ -97,6 +97,13 @@ Route::get('/', function () {
 
     // }
 
+    $hariHaid = "2024-09-01";
+    $startDate = Carbon::create($hariHaid);
+    $currentDate = Carbon::now();
 
-    // return $user;
+
+    $weekPassed = $startDate->diffInWeeks($currentDate);
+
+
+    return floor($weekPassed);
 });

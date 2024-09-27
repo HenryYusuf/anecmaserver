@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->date('tanggal');
             $table->double('nilai_hb');
+            $table->integer('usia_kehamilan');
 
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ class JurnalMakan extends Model
 
     protected $fillable = [
         'user_id',
+        'usia_kehamilan',
         'tanggal',
         'sarapan_karbohidrat',
         'sarapan_lauk_hewani',
@@ -29,6 +30,12 @@ class JurnalMakan extends Model
         'makan_malam_lauk_nabati',
         'makan_malam_sayur',
         'makan_malam_buah',
+        'total_kalori_karbohidrat',
+        'total_kalori_lauk_hewani',
+        'total_kalori_lauk_nabati',
+        'total_kalori_sayur',
+        'total_kalori_buah',
         'total_kalori',
+        'hasil_gizi'
     ];
 }

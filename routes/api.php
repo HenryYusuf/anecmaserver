@@ -50,7 +50,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Jurnal Makan
     Route::get('/istri/dashboard/get-jurnal-makan', [JurnalMakanController::class, 'getJurnalMakan']);
-    Route::post('/istri/dashboard/jurnal-makan', [JurnalMakanController::class, 'insertJurnalMakan']);
+    Route::get('/istri/dashboard/get-latest-jurnal-makan', [JurnalMakanController::class, 'getLatestJurnalMakan']);
+    // Route::post('/istri/dashboard/jurnal-makan', [JurnalMakanController::class, 'insertJurnalMakan']);
     Route::post('/istri/dashboard/insert-sarapan', [JurnalMakanController::class, 'insertSarapan']);
     Route::post('/istri/dashboard/insert-makan-siang', [JurnalMakanController::class, 'insertMakanSiang']);
     Route::post('/istri/dashboard/insert-makan-malam', [JurnalMakanController::class, 'insertMakanMalam']);

@@ -23,6 +23,18 @@ class JurnalMakanController extends BaseController
         }
     }
 
+    public function getLatestJurnalMakan()
+    {
+        $user = Auth::user();
+        $checkJurnalMakanUser = JurnalMakan::where('user_id', $user->id)->latest()->first();
+
+        if ($checkJurnalMakanUser) {
+            return $this->sendResponse($checkJurnalMakanUser, 'Jurnal Makan found.');
+        } else {
+            return $this->sendError('Error', 'Jurnal Makan not found.');
+        }
+    }
+
     public function insertJurnalMakan(Request $request)
     {
         $input = $request->all();
@@ -375,7 +387,7 @@ class JurnalMakanController extends BaseController
                     $checkJurnalMakanUser->sarapan_lauk_hewani +
                     $checkJurnalMakanUser->sarapan_lauk_nabati +
                     $checkJurnalMakanUser->sarapan_sayur +
-                    $checkJurnalMakanUser->sarond_buah +
+                    $checkJurnalMakanUser->sarapan_buah +
                     $input['makan_siang_karbohidrat'] +
                     $input['makan_siang_lauk_hewani'] +
                     $input['makan_siang_lauk_nabati'] +
@@ -413,7 +425,7 @@ class JurnalMakanController extends BaseController
                     $checkJurnalMakanUser->sarapan_lauk_hewani +
                     $checkJurnalMakanUser->sarapan_lauk_nabati +
                     $checkJurnalMakanUser->sarapan_sayur +
-                    $checkJurnalMakanUser->sarond_buah +
+                    $checkJurnalMakanUser->sarapan_buah +
                     $input['makan_siang_karbohidrat'] +
                     $input['makan_siang_lauk_hewani'] +
                     $input['makan_siang_lauk_nabati'] +
@@ -545,7 +557,7 @@ class JurnalMakanController extends BaseController
                     $checkJurnalMakanUser->sarapan_lauk_hewani +
                     $checkJurnalMakanUser->sarapan_lauk_nabati +
                     $checkJurnalMakanUser->sarapan_sayur +
-                    $checkJurnalMakanUser->sarond_buah +
+                    $checkJurnalMakanUser->sarapan_buah +
                     $checkJurnalMakanUser->makan_siang_karbohidrat +
                     $checkJurnalMakanUser->makan_siang_lauk_hewani +
                     $checkJurnalMakanUser->makan_siang_lauk_nabati +
@@ -583,7 +595,7 @@ class JurnalMakanController extends BaseController
                     $checkJurnalMakanUser->sarapan_lauk_hewani +
                     $checkJurnalMakanUser->sarapan_lauk_nabati +
                     $checkJurnalMakanUser->sarapan_sayur +
-                    $checkJurnalMakanUser->sarond_buah +
+                    $checkJurnalMakanUser->sarapan_buah +
                     $checkJurnalMakanUser->makan_siang_karbohidrat +
                     $checkJurnalMakanUser->makan_siang_lauk_hewani +
                     $checkJurnalMakanUser->makan_siang_lauk_nabati +

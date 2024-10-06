@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Api\Admin\DashboardController;
+use App\Http\Controllers\Api\Admin\EdukasiController as AdminEdukasiController;
 use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Auth\AuthController;
@@ -80,8 +81,15 @@ Route::middleware('auth:sanctum')->group(function () {
         // Admin Data Petugas Puskesmas
         Route::get('/admin/data-petugas-puskesmas', [PetugasController::class, 'dataPetugasPuskesmas']);
         Route::post('/admin/data-petugas-puskesmas/insert', [PetugasController::class, 'insertPetugasPuskesmas']);
-        // Route::get('/admin/data-puskesmas/show/{id}', [PuskesmasController::class, 'showPuskesmas']);
-        // Route::post('/admin/data-puskesmas/update/{id}', [PuskesmasController::class, 'updatePuskesmas']);
-        // Route::post('/admin/data-puskesmas/delete/{id}', [PuskesmasController::class, 'deletePuskesmas']);
+        Route::get('/admin/data-petugas-puskesmas/show/{id}', [PetugasController::class, 'showPetugasPuskesmas']);
+        Route::post('/admin/data-petugas-puskesmas/update/{id}', [PetugasController::class, 'updatePetugasPuskesmas']);
+        Route::post('/admin/data-petugas-puskesmas/delete/{id}', [PetugasController::class, 'deletePetugasPuskesmas']);
+
+        // Admin Data Edukasi
+        Route::get('/admin/data-edukasi', [AdminEdukasiController::class, 'dataEdukasi']);
+        Route::post('/admin/data-edukasi/insert', [AdminEdukasiController::class, 'insertEdukasi']);
+        Route::get('/admin/data-edukasi/show/{id}', [AdminEdukasiController::class, 'showEdukasi']);
+        Route::post('/admin/data-edukasi/update/{id}', [AdminEdukasiController::class, 'updateEdukasi']);
+        Route::post('/admin/data-edukasi/delete/{id}', [AdminEdukasiController::class, 'deleteEdukasi']);
     });
 });

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
 
-            $table->date('tanggal');
-            $table->double('nilai_hb');
-            $table->integer('usia_kehamilan');
+            $table->date('tanggal')->nullable();
+            $table->double('nilai_hb')->nullable();
+            $table->integer('usia_kehamilan')->nullable();
+            $table->enum("hasil_pemeriksaan", ['normal', 'anemia'])->nullable();
 
             $table->timestamps();
         });

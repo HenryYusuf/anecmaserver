@@ -51,4 +51,53 @@ class PetugasController extends BaseController
 
         return $this->sendResponse($result, 'Data petugas puskesmas created successfully.');
     }
+
+    public function showPetugasPuskesmas($id)
+    {
+        $petugasPuskesmas = User::where('id', $id)->with('puskesmas')->first();
+        return $this->sendResponse($petugasPuskesmas, 'Get data successfully.');
+    }
+
+    public function updatePetugasPuskesmas(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'puskesmas_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $updatePetugasPuskesmas = User::where('id', $id)->update([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => bcrypt($input['password']),
+            'role' => 'petugas'
+        ]);
+
+        $petugasPuskesmas = PetugasPuskesmas::where('user_id', $id)->update([
+            'puskesmas_id' => $input['puskesmas_id'],
+        ]);
+
+        $result = [
+            'user' => $updatePetugasPuskesmas,
+            'petugas_puskesmas' => $petugasPuskesmas
+        ];
+
+        return $this->sendResponse($result, 'Data petugas puskesmas updated successfully.');
+    }
+
+    public function deletePetugasPuskesmas($id)
+    {
+        $petugasPuskesmas = User::where('id', $id)->delete();
+
+        $petugasPuskesmas = PetugasPuskesmas::where('user_id', $id)->delete();
+
+        return $this->sendResponse($petugasPuskesmas, 'Data petugas puskesmas deleted successfully.');
+    }
 }

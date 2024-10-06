@@ -20,8 +20,11 @@ return new class extends Migration
             $table->integer('usia_kehamilan')->nullable();
             $table->integer('jumlah_anak')->nullable();
             $table->boolean('riwayat_anemia')->default(0);
+            $table->string('hasil_gizi')->nullable();
             $table->integer('konsumsi_ttd_7hari')->nullable();
+            $table->double('lingkar_lengan_atas')->nullable();
             $table->float('hasil_hb')->nullable();
+            $table->integer('resiko')->nullable();
             $table->enum('resiko', ['rendah', 'tinggi'])->nullable();
 
             $table->timestamps();

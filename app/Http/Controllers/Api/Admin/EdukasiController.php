@@ -13,7 +13,7 @@ class EdukasiController extends BaseController
 {
     public function dataEdukasi()
     {
-        $results = Edukasi::orderBy('created_at', 'desc')->all();
+        $results = Edukasi::orderBy('created_at', 'desc')->get();
 
         return $this->sendResponse($results, 'Edukasi retrieved successfully.');
     }

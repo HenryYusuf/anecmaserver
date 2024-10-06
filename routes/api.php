@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\EdukasiController as AdminEdukasiController;
 use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
+use App\Http\Controllers\Api\Admin\UploadImageController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Dashboard\CekHbController;
 use App\Http\Controllers\Api\Dashboard\JurnalMakanController;
@@ -91,5 +92,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/data-edukasi/show/{id}', [AdminEdukasiController::class, 'showEdukasi']);
         Route::post('/admin/data-edukasi/update/{id}', [AdminEdukasiController::class, 'updateEdukasi']);
         Route::post('/admin/data-edukasi/delete/{id}', [AdminEdukasiController::class, 'deleteEdukasi']);
+
+        // Upload Image to Cloudinary
+        Route::post('/admin/upload-single-image', [UploadImageController::class, 'uploadSingleImage']);
     });
 });

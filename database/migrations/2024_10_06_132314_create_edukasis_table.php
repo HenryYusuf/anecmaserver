@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('judul')->nullable();
             $table->text('konten')->nullable();
 
+            $table->text('thumbnail')->nullable();
+            $table->text('thumbnail_public_id')->nullable();
+
             $table->enum('jenis', ['materi', 'video'])->nullable();
 
             $table->enum('kategori', ['pencegahan', 'edukasi'])->nullable();

@@ -21,7 +21,7 @@ class UploadImageController extends BaseController
         }
 
         $uploadFileUrl = Cloudinary::upload($request->file('file')->getRealPath(), [
-            'folder' => 'Edukasi',
+            'folder' => 'Edukasi/Konten',
             'allowed_formats' => ['jpg', 'jpeg', 'png']
         ])->getSecurePath();
 

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class EdukasiController extends BaseController
@@ -25,6 +27,7 @@ class EdukasiController extends BaseController
         $validator = Validator::make($input, [
             'judul' => 'required',
             'konten' => 'required',
+            'thumbnail' => 'required',
             'jenis' => 'required',
             'kategori' => 'required',
         ]);
@@ -33,12 +36,26 @@ class EdukasiController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
+        $uploadFileUrl = Cloudinary::upload($input['thumbnail']->getRealPath(), [
+            'folder' => 'Edukasi/Thumbnail',
+            'transformation' => [
+                'width' => 400,
+                'height' => 400,
+                'crop' => 'fill'
+            ],
+            'allowed_formats' => ['jpg', 'jpeg', 'png']
+        ])->getSecurePath();
+
+        $thumbnailPublicId = Cloudinary::getPublicId($uploadFileUrl);
+
         $user = Auth::user();
 
         $edukasi = Edukasi::create([
             'created_by' => $user->id,
             'judul' => $input['judul'],
             'konten' => $input['konten'],
+            'thumbnail' => $uploadFileUrl,
+            'thumbnail_public_id' => $thumbnailPublicId,
             'jenis' => $input['jenis'],
             'kategori' => $input['kategori'],
         ]);
@@ -60,6 +77,7 @@ class EdukasiController extends BaseController
         $validator = Validator::make($input, [
             'judul' => 'required',
             'konten' => 'required',
+            'thumbnail' => 'required',
             'jenis' => 'required',
             'kategori' => 'required',
         ]);
@@ -70,9 +88,35 @@ class EdukasiController extends BaseController
 
         $edukasi = Edukasi::find($id);
 
+        $uploadFileUrl = "";
+
+        if ($input['thumbnail'] !== $edukasi->thumbnail) {
+
+            $publicId = $edukasi->thumbnail_public_id;
+
+            $exists = Storage::disk('cloudinary')->fileExists($publicId);
+
+            if ($exists) {
+                Cloudinary::destroy($publicId);
+            }
+
+            $uploadFileUrl = Cloudinary::upload($input['thumbnail']->getRealPath(), [
+                'folder' => 'Edukasi/Thumbnail',
+                'transformation' => [
+                    'width' => 400,
+                    'height' => 400,
+                    'crop' => 'fill'
+                ],
+                'allowed_formats' => ['jpg', 'jpeg', 'png']
+            ])->getSecurePath();
+        } else {
+            $uploadFileUrl = $input['thumbnail'];
+        }
+
         $edukasi->update([
             'judul' => $input['judul'],
             'konten' => $input['konten'],
+            'thumbnail' => $uploadFileUrl,
             'jenis' => $input['jenis'],
             'kategori' => $input['kategori'],
         ]);
@@ -83,6 +127,14 @@ class EdukasiController extends BaseController
     public function deleteEdukasi($id)
     {
         $edukasi = Edukasi::find($id);
+
+        $publicId = $edukasi->thumbnail_public_id;
+
+        $exists = Storage::disk('cloudinary')->fileExists($publicId);
+
+        if ($exists) {
+            Cloudinary::destroy($publicId);
+        }
 
         $edukasi->delete();
 

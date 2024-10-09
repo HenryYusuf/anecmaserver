@@ -15,6 +15,8 @@ class Edukasi extends Model
         'created_by',
         'judul',
         'konten',
+        'thumbnail',
+        'thumbnail_public_id',
         'jenis',
         'kategori',
     ];

@@ -89,6 +89,7 @@ class EdukasiController extends BaseController
         $edukasi = Edukasi::find($id);
 
         $uploadFileUrl = "";
+        $thumbnailPublicId = "";
 
         if ($input['thumbnail'] !== $edukasi->thumbnail) {
 
@@ -109,6 +110,8 @@ class EdukasiController extends BaseController
                 ],
                 'allowed_formats' => ['jpg', 'jpeg', 'png']
             ])->getSecurePath();
+
+            $thumbnailPublicId = Cloudinary::getPublicId($uploadFileUrl);
         } else {
             $uploadFileUrl = $input['thumbnail'];
         }
@@ -117,6 +120,7 @@ class EdukasiController extends BaseController
             'judul' => $input['judul'],
             'konten' => $input['konten'],
             'thumbnail' => $uploadFileUrl,
+            'thumbnail_public_id' => $thumbnailPublicId,
             'jenis' => $input['jenis'],
             'kategori' => $input['kategori'],
         ]);

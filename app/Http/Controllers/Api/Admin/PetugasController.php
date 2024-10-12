@@ -66,7 +66,7 @@ class PetugasController extends BaseController
         $validator = Validator::make($input, [
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'nullable',
             'puskesmas_id' => 'required',
         ]);
 
@@ -74,13 +74,8 @@ class PetugasController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $user = Auth::user();
-        $password = "";
-
-        if ($user->password !== $input['password']) {
+        if ($input['password']) {
             $password = bcrypt($input['password']);
-        } else if ($user->passwrod === $input['password']) {
-            $password = $user->password;
         }
 
         $updatePetugasPuskesmas = User::where('id', $id)->update([

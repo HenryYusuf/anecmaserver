@@ -114,6 +114,7 @@ class EdukasiController extends BaseController
             $thumbnailPublicId = Cloudinary::getPublicId($uploadFileUrl);
         } else {
             $uploadFileUrl = $input['thumbnail'];
+            $thumbnailPublicId = $edukasi->thumbnail_public_id;
         }
 
         $edukasi->update([

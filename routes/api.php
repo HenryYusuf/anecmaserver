@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Dashboard\JurnalMakanController;
 use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
 use App\Http\Controllers\Api\Dashboard\ReminderTtdController;
+use App\Http\Controllers\Api\Edukasi\EdukasiController as IstriEdukasiController;
 use App\Http\Controllers\Api\Profil\ProfilController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Http\Request;
@@ -39,6 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/profil/update-data-diri', [ProfilController::class, 'dataDiri']);
     Route::post('/istri/profil/update-data-kehamilan', [ProfilController::class, 'dataKehamilan']);
     Route::post('/istri/profil/update-data-suami', [ProfilController::class, 'dataSuami']);
+
+    // Edukasi Istri
+    Route::get('/istri/edukasi/get-edukasi', [IstriEdukasiController::class, 'getEdukasi']);
+    Route::get('/istri/edukasi/show-edukasi/{id}', [IstriEdukasiController::class, 'showEdukasi']);
 
     // Kalkulator Anemia
     Route::post('/istri/dashboard/kalkulator-anemia', [KalkulatorController::class, 'kalkulatorAnemia']);

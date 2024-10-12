@@ -74,7 +74,7 @@ class PetugasController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $petugasPuskesmas = User::where('user_id', $id)->first();
+        $petugasPuskesmas = User::where('id', $id)->first();
 
         $password = $petugasPuskesmas->password;
 

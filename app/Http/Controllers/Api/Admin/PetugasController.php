@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PetugasPuskesmas;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PetugasController extends BaseController
@@ -73,10 +74,19 @@ class PetugasController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
+        $user = Auth::user();
+        $password = "";
+
+        if ($user->password !== $input['password']) {
+            $password = bcrypt($input['password']);
+        } else if ($user->passwrod === $input['password']) {
+            $password = $user->password;
+        }
+
         $updatePetugasPuskesmas = User::where('id', $id)->update([
             'name' => $input['name'],
             'email' => $input['email'],
-            'password' => bcrypt($input['password']),
+            'password' => $password,
             'role' => 'petugas'
         ]);
 

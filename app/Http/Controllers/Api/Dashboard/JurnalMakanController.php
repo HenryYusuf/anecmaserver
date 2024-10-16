@@ -290,7 +290,7 @@ class JurnalMakanController extends BaseController
 
         if ($checkJurnalMakanUser) {
             // dd("Gacor");
-            $updateSarapan = $checkJurnalMakanUser->update([
+            $checkJurnalMakanUser->update([
                 'usia_kehamilan' => $weekPassed,
                 'tanggal' => now(),
                 'sarapan_karbohidrat' => $input['sarapan_karbohidrat'],
@@ -308,7 +308,7 @@ class JurnalMakanController extends BaseController
             ]);
 
             $results = [
-                'hasil_sarapan' => $updateSarapan
+                'hasil_sarapan' => $checkJurnalMakanUser
             ];
 
             return $this->sendResponse($results, 'Jurnal Makan created or updated successfully.');
@@ -460,7 +460,7 @@ class JurnalMakanController extends BaseController
 
         if ($checkJurnalMakanUser) {
             // dd("Gacor");
-            $updateJurnalMakan = $checkJurnalMakanUser->update([
+            $checkJurnalMakanUser->update([
                 'usia_kehamilan' => $weekPassed,
                 'tanggal' => now(),
                 'makan_siang_karbohidrat' => $input['makan_siang_karbohidrat'],
@@ -478,7 +478,7 @@ class JurnalMakanController extends BaseController
             ]);
 
             $results = [
-                'update_jurnal_makan' => $updateJurnalMakan
+                'update_jurnal_makan' => $checkJurnalMakanUser
             ];
 
             return $this->sendResponse($results, 'Jurnal Makan created or updated successfully.');
@@ -630,7 +630,7 @@ class JurnalMakanController extends BaseController
 
         if ($checkJurnalMakanUser) {
             // dd("Gacor");
-            $updateJurnalMakan = $checkJurnalMakanUser->update([
+            $checkJurnalMakanUser->update([
                 'usia_kehamilan' => $weekPassed,
                 'tanggal' => now(),
                 'makan_malam_karbohidrat' => $input['makan_malam_karbohidrat'],
@@ -648,7 +648,7 @@ class JurnalMakanController extends BaseController
             ]);
 
             $results = [
-                'update_jurnal_makan' => $updateJurnalMakan
+                'update_jurnal_makan' => $checkJurnalMakanUser
             ];
 
             return $this->sendResponse($results, 'Jurnal Makan created or updated successfully.');

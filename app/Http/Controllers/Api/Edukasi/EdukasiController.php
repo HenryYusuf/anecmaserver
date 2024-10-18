@@ -33,6 +33,8 @@ class EdukasiController extends BaseController
             $results = Edukasi::orderByRaw("CASE WHEN kategori = 'edukasi' THEN 0 ELSE 1 END") // Prioritaskan 'edukasi'
                 ->inRandomOrder()
                 ->get();
+        } else {
+            $results = Edukasi::inRandomOrder()->get();
         }
 
         return $this->sendResponse($results, 'Edukasi retrieved successfully.');

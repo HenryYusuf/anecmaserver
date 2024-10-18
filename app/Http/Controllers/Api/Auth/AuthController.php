@@ -72,7 +72,7 @@ class AuthController extends BaseController
 
         $results = [
             'user' => $userData,
-            'umur_kehamilan' => $weekPassed
+            'usia_kehamilan' => $weekPassed
         ];
 
         return $this->sendResponse($results, 'User retrieved successfully.');

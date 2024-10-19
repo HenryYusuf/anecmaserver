@@ -14,6 +14,7 @@ class KonsumsiTtd extends Model
     protected $fillable = [
         'user_id',
         'tanggal_waktu',
+        'total_tablet_diminum',
         'minum_vit_c'
     ];
 }

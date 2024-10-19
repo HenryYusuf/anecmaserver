@@ -34,6 +34,15 @@ class CekHbController extends BaseController
         return $this->sendResponse($results, 'Count Cek HB retrieved successfully.');
     }
 
+    public function getUserHb()
+    {
+        $user = Auth::user();
+
+        $cekHb = CekHb::where('user_id', $user->id)->orderBy('tanggal', 'desc')->get();
+
+        return $this->sendResponse($cekHb, 'Riwayat HB retrieved successfully.');
+    }
+
     public function insertRiwayatHb(Request $request)
     {
         $input = $request->all();

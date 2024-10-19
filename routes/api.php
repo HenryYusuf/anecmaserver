@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Konsumsi TTd
     Route::post('/istri/dashboard/konsumsi-ttd', [KonsumsiTtdController::class, 'konsumsiTablet']);
+    Route::get('/istri/dashboard/get-konsumsi-ttd', [KonsumsiTtdController::class, 'getKonsumsiTabletUser']);
 
     // Reminder TTd
     Route::get('/istri/dashboard/get-user-reminder-ttd', [ReminderTtdController::class, 'getUserReminderTtd']);
@@ -66,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Riwayat HB
     Route::get('/istri/dashboard/get-hb-terbaru', [CekHbController::class, 'getHbTerbaru']);
     Route::get('/istri/dashboard/get-count-cek-hb', [CekHbController::class, 'getCountCekHb']);
+    Route::get('/istri/dashboard/get-user-hb', [CekHbController::class, 'getUserHb']);
     Route::post('/istri/dashboard/insert-riwayat-hb', [CekHbController::class, 'insertRiwayatHb']);
 
     /*==== Suami ==== */

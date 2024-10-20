@@ -540,7 +540,12 @@ class JurnalMakanController extends BaseController
         // Cek apakah ada riwayat mengisi jurnal makan hari ini
         $checkJurnalMakanUser = JurnalMakan::where('user_id', $user->id)->whereDate('tanggal', now())->first();
 
-        // dd($checkJurnalMakanUser);
+        // Cek apakah pernah atau belum mengisi jurnal makan
+        $countJurnalMakanUser = JurnalMakan::where('user_id', $user->id)->count();
+
+        $previousJurnalMakanUser = JurnalMakan::where('user_id', $user->id)->whereDate('tanggal', '<', now())->latest()->first();
+
+        // dd($previousJurnalMakanUser);
 
         $total_kalori = 0;
         $total_kalori_karbohidrat = 0;
@@ -647,8 +652,52 @@ class JurnalMakanController extends BaseController
                 'hasil_gizi' => $hasil_gizi,
             ]);
 
+            $pesan = "";
+            if ($countJurnalMakanUser <= 1) {
+
+                if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
+                    // dd("1 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
+                    $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
+                    // dd("2 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
+                    $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                } else {
+                    // dd("Error");
+                    $pesan = "Error";
+                }
+                // dd("Pertama kali isi");
+            } else {
+
+                if ($previousJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
+                    if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
+                        // dd("3 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
+                        $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                    } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
+                        // dd("4 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
+                        $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                    }
+                } else if ($previousJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
+                    if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
+                        // dd("5 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
+                        $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                    } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
+                        // dd("6 Bunda saat ini konsumsi makan Anda masih belum memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
+                        $pesan = "Bunda saat ini konsumsi makan Anda masih belum memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                    } else {
+                        // dd("Error");
+                        $pesan = "Error";
+                    }
+                } else {
+                    // dd("Error");
+                    $pesan = "Error";
+                }
+
+                // dd("Kedua atau lebih");
+            }
+
             $results = [
-                'update_jurnal_makan' => $checkJurnalMakanUser
+                'update_jurnal_makan' => $checkJurnalMakanUser,
+                'pesan' => $pesan
             ];
 
             return $this->sendResponse($results, 'Jurnal Makan created or updated successfully.');

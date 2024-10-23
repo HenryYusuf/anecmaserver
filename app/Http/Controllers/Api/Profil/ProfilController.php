@@ -51,7 +51,6 @@ class ProfilController extends BaseController
             'hari_pertama_haid' => 'required',
             'wilayah_binaan' => 'required',
             'kelurahan' => 'required',
-            'desa' => 'required',
             'tempat_periksa_kehamilan' => 'required',
         ]);
 
@@ -65,7 +64,6 @@ class ProfilController extends BaseController
             'hari_pertama_haid' => $input['hari_pertama_haid'],
             'wilayah_binaan' => $input['wilayah_binaan'],
             'kelurahan' => $input['kelurahan'],
-            'desa' => $input['desa'],
             'tempat_periksa_kehamilan' => $input['tempat_periksa_kehamilan'],
         ]);
         return $this->sendResponse($updatedUser, 'Data kehamilan updated successfully.');

@@ -555,6 +555,7 @@ class JurnalMakanController extends BaseController
         $total_kalori_buah = 0;
         $hasil_gizi = "";
 
+        // Cek trisemester
         if ($weekPassed <= 12) {
             if ($checkJurnalMakanUser) {
                 // dd("sudah pernah isi 5 porsi");

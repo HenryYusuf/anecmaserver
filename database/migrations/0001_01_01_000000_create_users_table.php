@@ -27,7 +27,6 @@ return new class extends Migration
             $table->date('hari_pertama_haid')->nullable();
             $table->string('wilayah_binaan')->nullable();
             $table->string('kelurahan')->nullable();
-            $table->string('desa')->nullable();
             $table->string('tempat_periksa_kehamilan')->nullable();
             // Data Suami
             $table->string('nama_suami')->nullable();

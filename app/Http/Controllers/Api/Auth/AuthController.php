@@ -112,9 +112,16 @@ class AuthController extends BaseController
 
         $dataWife = User::where('email', $wifeEmail)->with('resikoAnemia', 'riwayat_hb')->first();
 
+        $hariPertamaHaid = $dataWife->hari_pertama_haid;
+        $startDate = Carbon::create($hariPertamaHaid);
+        $currentDate = Carbon::now();
+
+        $weekPassed = floor($startDate->diffInWeeks($currentDate));
+
         $results = [
             'user' => $user,
-            'dataWife' => $dataWife
+            'dataWife' => $dataWife,
+            "usia_kehamilan_istri" => $weekPassed
         ];
         // $results = User::where('email')
 

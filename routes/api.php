@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\EdukasiController as AdminEdukasiController;
+use App\Http\Controllers\Api\Admin\KategoriController;
+use App\Http\Controllers\Api\Admin\KategoriEdukasiController;
 use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Admin\UploadImageController;
@@ -13,8 +15,11 @@ use App\Http\Controllers\Api\Dashboard\KalkulatorController;
 use App\Http\Controllers\Api\Dashboard\KonsumsiTtdController;
 use App\Http\Controllers\Api\Dashboard\ReminderTtdController;
 use App\Http\Controllers\Api\Edukasi\EdukasiController as IstriEdukasiController;
+use App\Http\Controllers\Api\Petugas\AuthController as PetugasAuthController;
+use App\Http\Controllers\Api\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Api\Profil\ProfilController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\PetugasMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +37,7 @@ Route::post('/suami/login-token', [AuthController::class, 'suamiLogin']);
 Route::post('/admin/register', [AdminAuthController::class, 'adminRegister']);
 Route::post('/admin/login', [AdminAuthController::class, 'adminLogin']);
 
+Route::post('/petugas/login', [PetugasAuthController::class, 'petugasLogin']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/login', [AuthController::class, 'istriLogin']);
     Route::get('/istri/get-user', [AuthController::class, 'getUser']);
@@ -93,6 +99,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/admin/data-petugas-puskesmas/update/{id}', [PetugasController::class, 'updatePetugasPuskesmas']);
         Route::post('/admin/data-petugas-puskesmas/delete/{id}', [PetugasController::class, 'deletePetugasPuskesmas']);
 
+        // Admin Kategori Edukasi
+        Route::get('/admin/data-kategori', [KategoriController::class, 'dataKategori']);
+        Route::post('/admin/data-kategori/insert', [KategoriController::class, 'insertKategori']);
+        Route::post('/admin/data-kategori/update/{id}', [KategoriController::class, 'updateKategori']);
+        Route::post('/admin/data-kategori/delete/{id}', [KategoriController::class, 'deleteKategori']);
+        Route::get('/admin/data-kategori-edukasi', [KategoriEdukasiController::class, 'dataKategoriEdukasi']);
+
         // Admin Data Edukasi
         Route::get('/admin/data-edukasi', [AdminEdukasiController::class, 'dataEdukasi']);
         Route::post('/admin/data-edukasi/insert', [AdminEdukasiController::class, 'insertEdukasi']);
@@ -102,5 +115,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Upload Image to Cloudinary
         Route::post('/admin/upload-single-image', [UploadImageController::class, 'uploadSingleImage']);
+    });
+
+    Route::middleware(PetugasMiddleware::class)->group(function () {
+
+        Route::get('/petugas/get-user', [PetugasAuthController::class, 'getUser']);
+
+        Route::get('/petugas/dashboard', [PetugasDashboardController::class, 'petugasDashboard']);
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Edukasi;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
+use App\Models\Kategori;
 use App\Models\ResikoAnemia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,15 +27,17 @@ class EdukasiController extends BaseController
         }
 
         if ($cekResiko->resiko == "rendah") {
-            $results = Edukasi::orderByRaw("CASE WHEN kategori = 'pencegahan' THEN 0 ELSE 1 END") // Prioritaskan 'pencegahan'
-                ->inRandomOrder()
-                ->get();
+            // $results = Edukasi::orderByRaw("CASE WHEN kategori = 'pencegahan' THEN 0 ELSE 1 END") // Prioritaskan 'pencegahan'
+            //     ->inRandomOrder()
+            //     ->get();
+            $results = Kategori::with('edukasi')->has('edukasi')->whereNull('parent_id')->where('gender', 'istri')->get();
         } else if ($cekResiko->resiko == "tinggi") {
-            $results = Edukasi::orderByRaw("CASE WHEN kategori = 'edukasi' THEN 0 ELSE 1 END") // Prioritaskan 'edukasi'
-                ->inRandomOrder()
-                ->get();
+            // $results = Edukasi::orderByRaw("CASE WHEN kategori = 'edukasi' THEN 0 ELSE 1 END") // Prioritaskan 'edukasi'
+            //     ->inRandomOrder()
+            //     ->get();
+            $results = Kategori::with(['kategori_child.edukasi'])->whereNull('parent_id')->where('gender', 'istri')->limit(2)->get();
         } else {
-            $results = Edukasi::inRandomOrder()->get();
+            $results = "Silahkan cek resiko anemia di kalkulator anemia terlebih dahulu!";
         }
 
         return $this->sendResponse($results, 'Edukasi retrieved successfully.');

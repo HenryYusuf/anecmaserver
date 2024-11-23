@@ -24,8 +24,10 @@ return new class extends Migration
             $table->text('thumbnail_public_id')->nullable();
 
             $table->enum('jenis', ['materi', 'video'])->nullable();
-
             $table->enum('kategori', ['pencegahan', 'edukasi'])->nullable();
+
+            $table->unsignedBigInteger('kategori_id')->nullable();
+            $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
 
 
             $table->timestamps();

@@ -11,6 +11,8 @@ class Edukasi extends Model
 
     protected $table = 'edukasi';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'created_by',
         'judul',
@@ -19,5 +21,16 @@ class Edukasi extends Model
         'thumbnail_public_id',
         'jenis',
         'kategori',
+        'kategori_id',
     ];
+
+    public function kategori_pivot()
+    {
+        return $this->belongsToMany(Kategori::class, 'kategori_edukasi', 'edukasi_id', 'kategori_id');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
 }

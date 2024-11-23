@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
+use App\Models\KategoriEdukasi;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ class EdukasiController extends BaseController
             'thumbnail' => 'required',
             'jenis' => 'required',
             'kategori' => 'required',
+            // 'kategori_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -58,9 +60,22 @@ class EdukasiController extends BaseController
             'thumbnail_public_id' => $thumbnailPublicId,
             'jenis' => $input['jenis'],
             'kategori' => $input['kategori'],
+            'kategori_id' => $input['kategori_id'],
         ]);
 
-        return $this->sendResponse($edukasi, 'Edukasi inserted successfully.');
+        if ($input['kategori_id'] !== null) {
+            $kategoriEdukasi = KategoriEdukasi::create([
+                'kategori_id' => $input['kategori_id'],
+                'edukasi_id' => $edukasi->id,
+            ]);
+        }
+
+        $results = [
+            'edukasi' => $edukasi,
+            'kategori_edukasi' => $kategoriEdukasi ?? null
+        ];
+
+        return $this->sendResponse($results, 'Edukasi inserted successfully.');
     }
 
     public function showEdukasi($id)
@@ -80,6 +95,7 @@ class EdukasiController extends BaseController
             'thumbnail' => 'required',
             'jenis' => 'required',
             'kategori' => 'required',
+            // 'kategori_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -124,9 +140,23 @@ class EdukasiController extends BaseController
             'thumbnail_public_id' => $thumbnailPublicId,
             'jenis' => $input['jenis'],
             'kategori' => $input['kategori'],
+            'kategori_id' => $input['kategori_id'],
         ]);
 
-        return $this->sendResponse($edukasi, 'Edukasi updated successfully.');
+        if ($input['kategori_id'] !== null) {
+            $kategoriEdukasi = KategoriEdukasi::where('edukasi_id', $edukasi->id)->first();
+
+            $kategoriEdukasi->update([
+                'kategori_id' => $input['kategori_id'],
+            ]);
+        }
+
+        $results = [
+            'edukasi' => $edukasi,
+            'kategori_edukasi' => $kategoriEdukasi ?? null
+        ];
+
+        return $this->sendResponse($results, 'Edukasi updated successfully.');
     }
 
     public function deleteEdukasi($id)
@@ -141,8 +171,17 @@ class EdukasiController extends BaseController
             Cloudinary::destroy($publicId);
         }
 
+        $kategoriEdukasi = KategoriEdukasi::where('edukasi_id', $edukasi->id)->first();
+
+        $kategoriEdukasi->delete();
+
         $edukasi->delete();
 
-        return $this->sendResponse($edukasi, 'Edukasi deleted successfully.');
+        $results = [
+            'edukasi' => $edukasi,
+            'kategori_edukasi' => $kategoriEdukasi
+        ];
+
+        return $this->sendResponse($results, 'Edukasi deleted successfully.');
     }
 }

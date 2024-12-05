@@ -37,7 +37,9 @@ class EdukasiController extends BaseController
             //     ->get();
             $results = Kategori::with(['kategori_child.edukasi'])->whereNull('parent_id')->where('gender', 'istri')->limit(2)->get();
         } else {
-            $results = "Silahkan cek resiko anemia di kalkulator anemia terlebih dahulu!";
+            $results = [
+                'data' => 'Silahkan cek resiko anemia di kalkulator anemia terlebih dahulu!'
+            ];
         }
 
         return $this->sendResponse($results, 'Edukasi retrieved successfully.');

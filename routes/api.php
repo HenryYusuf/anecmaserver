@@ -18,8 +18,11 @@ use App\Http\Controllers\Api\Edukasi\EdukasiController as IstriEdukasiController
 use App\Http\Controllers\Api\Petugas\AuthController as PetugasAuthController;
 use App\Http\Controllers\Api\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Api\Profil\ProfilController;
+use App\Http\Controllers\Api\Suami\Edukasi\EdukasiController as SuamiEdukasiController;
+use App\Http\Controllers\Api\Suami\Profil\ProfilController as SuamiProfilController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PetugasMiddleware;
+use App\Http\Middleware\SuamiMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -77,7 +80,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/dashboard/insert-riwayat-hb', [CekHbController::class, 'insertRiwayatHb']);
 
     /*==== Suami ==== */
-    Route::get('/suami/get-user', [AuthController::class, 'getUserSuami']);
+    Route::middleware(SuamiMiddleware::class)->group(function () {
+        Route::get('/suami/get-user', [AuthController::class, 'getUserSuami']);
+
+        // Edukasi
+        Route::get('/suami/edukasi/get-edukasi', [SuamiEdukasiController::class, 'getEdukasi']);
+
+        // Profil
+        Route::post('/suami/profil/update-data-diri', [SuamiProfilController::class, 'updateDataDiri']);
+        Route::post('/suami/profil/update-data-password', [SuamiProfilController::class, 'updatePassword']);
+    });
 
     /*==== Admin ==== */
     Route::middleware([AdminMiddleware::class])->group(function () {

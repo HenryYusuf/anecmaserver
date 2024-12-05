@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('konsumsi_ttd_7hari')->nullable();
             $table->double('lingkar_lengan_atas')->nullable();
             $table->float('hasil_hb')->nullable();
-            $table->integer('resiko')->nullable();
+            $table->integer('skor_resiko')->nullable();
             $table->enum('resiko', ['rendah', 'tinggi'])->nullable();
 
             $table->timestamps();

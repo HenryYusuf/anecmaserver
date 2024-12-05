@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
 
             $table->dateTime('tanggal_waktu')->nullable();
-            $table->int('total_tablet_diminum')->nullable();
+            $table->integer('total_tablet_diminum')->nullable();
             $table->boolean('minum_vit_c')->nullable();
 
             $table->timestamps();

@@ -38,9 +38,9 @@ class KategoriController extends BaseController
     {
         $results = Kategori::get();
 
-        $cek = $this->buildSelectOptions($results);
+        // $cek = $this->buildSelectOptions($results);
 
-        dd(implode($cek));
+        // dd(implode($cek));
 
         return $this->sendResponse($results, 'Kategori retrieved successfully.');
     }

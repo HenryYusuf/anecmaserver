@@ -146,9 +146,16 @@ class EdukasiController extends BaseController
         if ($input['kategori_id'] !== null) {
             $kategoriEdukasi = KategoriEdukasi::where('edukasi_id', $edukasi->id)->first();
 
-            $kategoriEdukasi->update([
-                'kategori_id' => $input['kategori_id'],
-            ]);
+            if ($kategoriEdukasi) {
+                $kategoriEdukasi->update([
+                    'kategori_id' => $input['kategori_id'],
+                ]);
+            } else {
+                KategoriEdukasi::create([
+                    'edukasi_id' => $edukasi->id,
+                    'kategori_id' => $input['kategori_id'],
+                ]);
+            }
         }
 
         $results = [

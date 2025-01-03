@@ -39,7 +39,7 @@ class ProfilController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'usia' => 'required|numeric',
+            'usia' => 'required',
             'no_hp' => 'required',
             'tempat_tinggal_ktp' => 'required',
             'tempat_tinggal_domisili' => 'required',

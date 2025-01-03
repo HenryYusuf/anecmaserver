@@ -17,7 +17,7 @@ return new class extends Migration
             // Data Diri
             $table->string('name')->default('istri');
             $table->string('email')->unique();
-            $table->integer('usia')->nullable();
+            $table->date('usia')->nullable();
             $table->string('no_hp')->nullable();
             $table->text('tempat_tinggal_ktp')->nullable();
             $table->string('tempat_tinggal_domisili')->nullable();

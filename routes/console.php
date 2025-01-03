@@ -93,6 +93,8 @@ use WaAPI\WaAPI\WaAPI;
 //     }
 // })->everyMinute();
 
+Schedule::command('queue:work --stop-when-empty')->everyMinute()->withoutOverlapping();
+
 Schedule::call(function () {
     // Mengatur timezone ke Asia/Jakarta
     $date = Carbon::now('Asia/Jakarta');

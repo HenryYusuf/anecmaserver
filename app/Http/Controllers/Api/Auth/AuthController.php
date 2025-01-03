@@ -51,7 +51,7 @@ class AuthController extends BaseController
                 'email' => $user['email'],
             ]);
 
-            $success['token'] =  $user->createToken($provider, ['*'], now()->addMonth()->subDay())->plainTextToken;
+            $success['token'] =  $user->createToken($provider, ['*'])->plainTextToken;
             // $success['name'] =  $user->name;
 
             return $this->sendResponse($success, 'User register successfully.');

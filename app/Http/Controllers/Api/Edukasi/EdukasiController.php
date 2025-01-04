@@ -22,7 +22,9 @@ class EdukasiController extends BaseController
 
         // dd($cekResiko->resiko);
         if (!$cekResiko) {
-            $results = Kategori::with('edukasi')->where('gender', 'istri')->inRandomOrder()->get();
+            $results = Kategori::with('edukasi')->where('gender', 'istri')->inRandomOrder()->get()->flatMap(function ($kategori) {
+                return $kategori->edukasi;
+            });
             return $this->sendResponse($results, 'Edukasi retrieved successfully.');
         }
 
@@ -40,7 +42,9 @@ class EdukasiController extends BaseController
             // $results = [
             //     'data' => 'Silahkan cek resiko anemia di kalkulator anemia terlebih dahulu!'
             // ];
-            $results = Kategori::with('edukasi')->where('gender', 'istri')->inRandomOrder()->get();
+            $results = Kategori::with('edukasi')->where('gender', 'istri')->inRandomOrder()->get()->flatMap(function ($kategori) {
+                return $kategori->edukasi;
+            });
         }
 
         return $this->sendResponse($results, 'Edukasi retrieved successfully.');

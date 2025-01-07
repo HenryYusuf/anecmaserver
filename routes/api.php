@@ -85,6 +85,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Edukasi
         Route::get('/suami/edukasi/get-edukasi', [SuamiEdukasiController::class, 'getEdukasi']);
+        Route::get('/suami/edukasi/show-edukasi/{id}', [SuamiEdukasiController::class, 'showEdukasi']);
 
         // Profil
         Route::post('/suami/profil/update-data-diri', [SuamiProfilController::class, 'updateDataDiri']);

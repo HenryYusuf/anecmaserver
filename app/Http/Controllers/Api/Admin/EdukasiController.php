@@ -180,7 +180,9 @@ class EdukasiController extends BaseController
 
         $kategoriEdukasi = KategoriEdukasi::where('edukasi_id', $edukasi->id)->first();
 
-        $kategoriEdukasi->delete();
+        if ($kategoriEdukasi) {
+            $kategoriEdukasi->delete();
+        }
 
         $edukasi->delete();
 

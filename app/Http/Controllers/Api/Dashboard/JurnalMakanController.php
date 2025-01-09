@@ -724,8 +724,22 @@ class JurnalMakanController extends BaseController
                 'hasil_gizi' => $hasil_gizi,
             ]);
 
+            $pesan = "";
+
+            if ($hasil_gizi == "Gizi Seimbang") {
+                // dd("1 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
+                $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+            } else if ($hasil_gizi == "Gizi Tidak Seimbang") {
+                // dd("2 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
+                $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+            } else {
+                // dd("Error");
+                $pesan = "Error";
+            }
+
             $results = [
-                'hasil_makan_malam' => $insertMakanMalam
+                'hasil_makan_malam' => $insertMakanMalam,
+                'pesan' => $pesan
             ];
 
             return $this->sendResponse($results, 'Makan Malam created successfully.');

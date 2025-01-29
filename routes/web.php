@@ -107,3 +107,31 @@ Route::get('/', function () {
 
     return floor($weekPassed);
 });
+
+Route::get('/cetak-profil', function () {
+    $rekapUser = User::get();
+    dd($rekapUser);
+    return view('cetak-profil');
+});
+
+Route::get('/cetak-konsumsi-ttd', function () {
+    $rekapKonsumsiTtd = User::with('konsumsi_ttd')->get();
+    dd($rekapKonsumsiTtd);
+    return view('cetak-konsumsi-ttd');
+});
+
+Route::get('/cetak-pemeriksaan-hb', function () {
+    $rekapPemeriksaanHb = User::with('riwayat_hb')->get();
+    dd($rekapPemeriksaanHb);
+    return view('cetak-pemeriksaan-hb');
+});
+
+Route::get('/cetak-jurnal-makan', function () {
+    $rekapJurnalMakan = User::with('jurnal_makan')->get();
+    dd($rekapJurnalMakan);
+    return view('cetak-jurnal-makan');
+});
+
+Route::get('/cek-php', function () {
+    return (phpinfo());
+});

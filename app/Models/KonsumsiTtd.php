@@ -17,4 +17,16 @@ class KonsumsiTtd extends Model
         'total_tablet_diminum',
         'minum_vit_c'
     ];
+
+    protected $appends = ['total_jumlah_ttd_dikonsumsi'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getTotalJumlahTtdDikonsumsiAttribute()
+    {
+        return $this->where('user_id', $this->user_id)->sum('total_tablet_diminum');
+    }
 }

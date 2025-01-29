@@ -71,6 +71,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Puskesmas::class, 'petugas_puskesmas', 'user_id', 'puskesmas_id');
     }
 
+    public function konsumsi_ttd()
+    {
+        return $this->hasMany(KonsumsiTtd::class);
+    }
+
     public function reminder_ttd()
     {
         return $this->hasOne(ReminderTtd::class);
@@ -84,5 +89,15 @@ class User extends Authenticatable
     public function riwayat_hb()
     {
         return $this->hasOne(CekHb::class)->latestOfMany();
+    }
+
+    public function cekHb()
+    {
+        return $this->hasMany(CekHb::class);
+    }
+
+    public function jurnal_makan()
+    {
+        return $this->hasMany(JurnalMakan::class);
     }
 }

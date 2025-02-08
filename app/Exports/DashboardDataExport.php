@@ -9,9 +9,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class DashboardDataExport implements FromCollection, WithHeadings
 {
-     /**
+    /**
      * @return \Illuminate\Support\Collection
-     */  
+     */
     public function collection()
     {
         return User::with(['resikoAnemia', 'konsumsi_ttd', 'riwayat_hb'])
@@ -31,13 +31,13 @@ class DashboardDataExport implements FromCollection, WithHeadings
                     'ttd' => $jumlahTtd,
                     'nilai_hb' => $user->riwayat_hb->nilai_hb ?? '-',
                 ];
-        });
+            });
     }
 
 
     /**
      * Define the headings for the Excel file.
-     * 
+     *
      * @return array
      */
     public function headings(): array

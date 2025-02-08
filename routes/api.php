@@ -108,8 +108,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/data/rekap-ttd-90', [RekapTtdController::class, 'getRekapTtd90']);
 
         // Rekap Gizi
+        Route::get('/admin/data/rekap-konsumsi-gizi', [RekapGiziController::class, 'getRekapGizi']);
 
         // Rekap HB
+        Route::get('/admin/data/rekap-hb', [RekapHbController::class, 'getRekapHb']);
 
         /* == End Admin Data Rekap == */
 

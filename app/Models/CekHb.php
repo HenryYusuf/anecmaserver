@@ -18,4 +18,21 @@ class CekHb extends Model
         'usia_kehamilan',
         'hasil_pemeriksaan'
     ];
+
+    protected $appends = ['urutan_periksa'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getUrutanPeriksaAttribute()
+    {
+        $allResults = static::where('user_id', $this->user_id)
+            ->orderBy('tanggal', 'asc')
+            ->pluck('id')
+            ->toArray();
+
+        return array_search($this->id, $allResults) + 1;
+    }
 }

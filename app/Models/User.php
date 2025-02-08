@@ -100,4 +100,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(JurnalMakan::class);
     }
+
+    // public function jurnal_makan_sorted()
+    // {
+    //     return $this->hasMany(JurnalMakan::class)->orderBy('tanggal', 'asc');
+    // }
 }

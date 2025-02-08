@@ -38,4 +38,9 @@ class JurnalMakan extends Model
         'total_kalori',
         'hasil_gizi'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

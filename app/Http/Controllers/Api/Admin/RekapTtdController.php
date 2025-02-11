@@ -22,7 +22,7 @@ class RekapTtdController extends BaseController
             $query->selectRaw('MAX(tanggal_waktu)')
                 ->from('konsumsi_ttd')
                 ->groupBy(DB::raw('YEAR(tanggal_waktu), MONTH(tanggal_waktu), user_id'));
-        })->with('user.riwayat_hb')->paginate(10);
+        })->with('user.riwayat_hb')->get();
 
         return $this->sendResponse($rekapTTD, 'Rekap TTD retrieved successfully.');
     }
@@ -35,7 +35,7 @@ class RekapTtdController extends BaseController
 
     public function getRekapTtd90()
     {
-        $rekapTTD = KonsumsiTtd::with('user.riwayat_hb')->paginate(10);
+        $rekapTTD = KonsumsiTtd::with('user.riwayat_hb')->get();
 
         // $filterTTD = $rekapTTD->groupBy('user_id')->filter(function ($item) {
         //     return $item->total_jumlah_ttd_dikonsumsi >= 90;

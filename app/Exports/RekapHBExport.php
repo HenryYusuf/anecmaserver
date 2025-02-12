@@ -47,7 +47,7 @@ class RekapHBExport implements FromCollection, WithHeadings
 
     /**
      * Define the headings for the Excel file.
-     * 
+     *
      * @return array
      */
     public function headings(): array

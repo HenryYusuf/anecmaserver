@@ -17,7 +17,7 @@ class RekapGiziController extends BaseController
     {
         // $rekapGizi = User::with(['jurnal_makan_sorted'])->where('role', 'istri')->get();
 
-        $rekapGizi = JurnalMakan::with('user')->paginate(10);
+        $rekapGizi = JurnalMakan::with('user')->get();
 
         return $this->sendResponse($rekapGizi, 'Rekap Konsumsi Gizi retrieved successfully.');
     }

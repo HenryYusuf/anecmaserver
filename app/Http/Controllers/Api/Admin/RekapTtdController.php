@@ -79,18 +79,35 @@ class RekapTtdController extends BaseController
         //     ->orderBy('bulan')
         //     ->get();
 
+        // Rata rata perhari berdasarkan data yang ada di bulan tertentu
+        // $rekapKonsumsiTtd = KonsumsiTtd::with('user.riwayat_hb')
+        //     ->select([
+        //         'user_id',
+        //         DB::raw('YEAR(tanggal_waktu) as tahun'),
+        //         DB::raw('MONTH(tanggal_waktu) as bulan'),
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / COUNT(DISTINCT DATE(tanggal_waktu)) as rata_rata_perhari'),
+        //         DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
+        //     ])
+        //     ->whereNotNull('tanggal_waktu')
+        //     ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
+        //     ->get();
+
+        // Rata rata perhari berdasarkan hari yang ada di bulan dikurangi dengan jumlah hari terakhir di bulan tersebut
+        // Untuk total tablet diminum
         $rekapKonsumsiTtd = KonsumsiTtd::with('user.riwayat_hb')
             ->select([
                 'user_id',
                 DB::raw('YEAR(tanggal_waktu) as tahun'),
                 DB::raw('MONTH(tanggal_waktu) as bulan'),
                 DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / COUNT(DISTINCT DATE(tanggal_waktu)) as rata_rata_perhari'),
+                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / DAY(LAST_DAY(MAX(tanggal_waktu))) as rata_rata_perhari'),
                 DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
             ])
             ->whereNotNull('tanggal_waktu')
             ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
             ->get();
+
 
         return $this->sendResponse($rekapKonsumsiTtd, 'Rekap TTD retrieved successfully.');
     }

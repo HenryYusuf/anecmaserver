@@ -32,14 +32,44 @@ class RekapTtdExport implements FromCollection, WithHeadings
         //         return $item;
         //     });
 
+        // Rata rata perhari berdasarkan data yang ada di bulan tertentu
+        // return KonsumsiTtd::with('user.riwayat_hb')
+        //     ->select([
+        //         'user_id',
+        //         DB::raw('YEAR(tanggal_waktu) as tahun'),
+        //         DB::raw('MONTH(tanggal_waktu) as bulan'),
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / COUNT(DISTINCT DATE(tanggal_waktu)) as rata_rata_perhari'),
+        //         DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
+        //     ])
+        //     ->whereNotNull('tanggal_waktu')
+        //     ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
+        //     ->get()
+        //     ->map(function ($item) use (&$globalIndex) {
+        //         $globalIndex++;
 
+        //         return [
+        //             'No' => $globalIndex,
+        //             'Nama Ibu Hamil' => $item->user->name ?? '-',
+        //             'Puskesmas' => $item->user->wilayah_binaan ?? '-',
+        //             'Kadar HB (g/dL) Terakhir' => $item->user->riwayat_hb->nilai_hb ?? '-',
+        //             'Jumlah Tablet TTD Per Hari' => number_format($item->rata_rata_perhari, 2),
+        //             'Total Jumlah TTD yang Dikonsumsi' => $item->total_tablet_diminum,
+        //             'Vitamin C (Ya/Tidak)' => $item->lebih_banyak_vit_c ? 'Ya' : 'Tidak',
+        //             'Bulan' => $item->bulan . '-' . $item->tahun,
+        //         ];
+        //     });
+
+
+        // Rata rata berdasarkan hari yang ada di bulan dikurangi dengan jumlah hari terakhir di bulan tersebut untuk
+        // total tablet diminum
         return KonsumsiTtd::with('user.riwayat_hb')
             ->select([
                 'user_id',
                 DB::raw('YEAR(tanggal_waktu) as tahun'),
                 DB::raw('MONTH(tanggal_waktu) as bulan'),
                 DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / COUNT(DISTINCT DATE(tanggal_waktu)) as rata_rata_perhari'),
+                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / DAY(LAST_DAY(MAX(tanggal_waktu))) as rata_rata_perhari'),
                 DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
             ])
             ->whereNotNull('tanggal_waktu')

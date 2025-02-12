@@ -10,7 +10,9 @@ use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Admin\RekapGiziController;
 use App\Http\Controllers\Api\Admin\RekapHbController;
 use App\Http\Controllers\Api\Admin\RekapTtdController;
+use App\Http\Controllers\Api\Admin\SettingController;
 use App\Http\Controllers\Api\Admin\UploadImageController;
+use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Dashboard\CekHbController;
 use App\Http\Controllers\Api\Dashboard\JurnalMakanController;
@@ -44,13 +46,6 @@ Route::post('/admin/register', [AdminAuthController::class, 'adminRegister']);
 Route::post('/admin/login', [AdminAuthController::class, 'adminLogin']);
 
 Route::post('/petugas/login', [PetugasAuthController::class, 'petugasLogin']);
-
-
-Route::get('/admin/dashboard/export-data', [DashboardController::class, 'exportDataToExcel']);
-Route::get('/admin/rekap-ttd/export-data', [RekapTtdController::class, 'exportDataMonthToExcel']);
-Route::get('/admin/rekap-ttd-90/export-data', [RekapTtdController::class, 'exportData90ToExcel']);
-Route::get('/admin/rekap-hb/export-data', [RekapHbController::class, 'exportToExcel']);
-Route::get('/admin/rekap-gizi/export-data', [RekapGiziController::class, 'exportToExcel']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/istri/login', [AuthController::class, 'istriLogin']);
@@ -120,7 +115,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Rekap HB
         Route::get('/admin/data/rekap-hb', [RekapHbController::class, 'getRekapHb']);
-
         /* == End Admin Data Rekap == */
 
         // Admin Data Puskesmas
@@ -151,15 +145,22 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/admin/data-edukasi/update/{id}', [AdminEdukasiController::class, 'updateEdukasi']);
         Route::post('/admin/data-edukasi/delete/{id}', [AdminEdukasiController::class, 'deleteEdukasi']);
 
+        // Admin Data User
+        Route::get('/admin/data-user', [UserController::class, 'getUser']);
+        Route::post('/admin/data-user/delete/{id}', [UserController::class, 'deleteUser']);
+
+        // Admin Update Profil
+        Route::post('/admin/update-admin-profil/{id}', [SettingController::class, 'updateAdminProfil']);
+
         // Upload Image to Cloudinary
         Route::post('/admin/upload-single-image', [UploadImageController::class, 'uploadSingleImage']);
 
         // Export Excel
-        // Route::get('/admin/dashboard/export-data', [DashboardController::class, 'exportDataToExcel']);
-        // Route::get('/admin/rekap-ttd/export-data', [RekapTtdController::class, 'exportDataMonthToExcel']);
-        // Route::get('/admin/rekap-ttd-90/export-data', [RekapTtdController::class, 'exportData90ToExcel']);
-        // Route::get('/admin/rekap-hb/export-data', [RekapHbController::class, 'exportToExcel']);
-        // Route::get('/admin/rekap-gizi/export-data', [RekapGiziController::class, 'exportToExcel']);
+        Route::get('/admin/dashboard/export-data', [DashboardController::class, 'exportDataToExcel']);
+        Route::get('/admin/rekap-ttd/export-data', [RekapTtdController::class, 'exportDataMonthToExcel']);
+        Route::get('/admin/rekap-ttd-90/export-data', [RekapTtdController::class, 'exportData90ToExcel']);
+        Route::get('/admin/rekap-hb/export-data', [RekapHbController::class, 'exportToExcel']);
+        Route::get('/admin/rekap-gizi/export-data', [RekapGiziController::class, 'exportToExcel']);
     });
 
     Route::middleware(PetugasMiddleware::class)->group(function () {

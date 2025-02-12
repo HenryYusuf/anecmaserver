@@ -14,18 +14,24 @@ class DashboardDataExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
+        $globalIndex = 0;
+
         return User::with(['resikoAnemia', 'konsumsi_ttd', 'riwayat_hb'])
             ->where('role', 'istri')
             ->get()
-            ->map(function ($user) {
+            ->map(function ($user) use (&$globalIndex) {
+
+                $globalIndex++;
+
                 $tanggalLahir = $user->usia;
                 $usia = $tanggalLahir ? Carbon::parse($tanggalLahir)->age : '-';
 
                 $jumlahTtd = $user->konsumsi_ttd ? (string)$user->konsumsi_ttd->count() : '0';
 
                 return [
-                    'user_id' => $user->id,
+                    'no' => $globalIndex,
                     'name' => $user->name,
+                    'puskesmas' => $user->puskesmas->puskesmas ?? '-',
                     'usia' => $usia,
                     'resiko' => $user->resikoAnemia->first()->resiko ?? '-',
                     'ttd' => $jumlahTtd,
@@ -45,6 +51,7 @@ class DashboardDataExport implements FromCollection, WithHeadings
         return [
             'NO',
             'Nama',
+            'Puskesmas',
             'Usia',
             'Resiko Anemia',
             'Konsumsi TTD',

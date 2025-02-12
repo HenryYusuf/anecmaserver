@@ -12,7 +12,6 @@
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.21",
-        "twilio/sdk": "^8.3",
         "waapi/waapi-laravel-sdk": "^1.1"
     },
     "require-dev": {

@@ -22,6 +22,13 @@ class RekapGiziController extends BaseController
         return $this->sendResponse($rekapGizi, 'Rekap Konsumsi Gizi retrieved successfully.');
     }
 
+    public function getDetailRekapGizi($id)
+    {
+        $rekapGizi = JurnalMakan::with('user')->find($id);
+
+        return $this->sendResponse($rekapGizi, 'Detail Rekap Konsumsi Gizi retrieved successfully.');
+    }
+
     public function exportToExcel()
     {
         $fileName = 'Rekap_Konsumsi_Gizi_' . date('Y-m-d_H-i-s') . '.xlsx';

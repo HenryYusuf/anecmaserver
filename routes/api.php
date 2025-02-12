@@ -112,6 +112,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Rekap Gizi
         Route::get('/admin/data/rekap-konsumsi-gizi', [RekapGiziController::class, 'getRekapGizi']);
+        Route::get('/admin/data/detail-rekap-konsumsi-gizi/{id}', [RekapGiziController::class, 'getDetailRekapGizi']);
 
         // Rekap HB
         Route::get('/admin/data/rekap-hb', [RekapHbController::class, 'getRekapHb']);

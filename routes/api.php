@@ -22,6 +22,10 @@ use App\Http\Controllers\Api\Dashboard\ReminderTtdController;
 use App\Http\Controllers\Api\Edukasi\EdukasiController as IstriEdukasiController;
 use App\Http\Controllers\Api\Petugas\AuthController as PetugasAuthController;
 use App\Http\Controllers\Api\Petugas\DashboardController as PetugasDashboardController;
+use App\Http\Controllers\Api\Petugas\RekapGiziController as PetugasRekapGiziController;
+use App\Http\Controllers\Api\Petugas\RekapHbController as PetugasRekapHbController;
+use App\Http\Controllers\Api\Petugas\RekapTtdController as PetugasRekapTtdController;
+use App\Http\Controllers\Api\Petugas\UserController as PetugasUserController;
 use App\Http\Controllers\Api\Profil\ProfilController;
 use App\Http\Controllers\Api\Suami\Edukasi\EdukasiController as SuamiEdukasiController;
 use App\Http\Controllers\Api\Suami\Profil\ProfilController as SuamiProfilController;
@@ -168,6 +172,33 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/petugas/get-user', [PetugasAuthController::class, 'getUser']);
 
-        Route::get('/petugas/dashboard', [PetugasDashboardController::class, 'petugasDashboard']);
+        // Petugas Dashboard
+        Route::get('/petugas/dashboard-card-hitung-data', [PetugasDashboardController::class, 'hitungData']);
+        Route::get('/petugas/dashboard-data-terbaru', [PetugasDashboardController::class, 'dataTerbaru']);
+
+        /* == Start Petugas Data Rekap == */
+        // Rekap TTD
+        Route::get('/petugas/data/rekap-ttd', [PetugasRekapTtdController::class, 'getRekapTtd']);
+        // Rekap TTD > 90
+        Route::get('/petugas/data/rekap-ttd-90', [PetugasRekapTtdController::class, 'getRekapTtd90']);
+
+        // Rekap Gizi
+        Route::get('/petugas/data/rekap-konsumsi-gizi', [PetugasRekapGiziController::class, 'getRekapGizi']);
+        Route::get('/petugas/data/detail-rekap-konsumsi-gizi/{id}', [PetugasRekapGiziController::class, 'getDetailRekapGizi']);
+
+        // Rekap HB
+        Route::get('/petugas/data/rekap-hb', [PetugasRekapHbController::class, 'getRekapHb']);
+        /* == End Petugas Data Rekap == */
+
+        // Petugas Data User
+        Route::get('/petugas/data-user', [PetugasUserController::class, 'getUser']);
+        Route::post('/petugas/data-user/delete/{id}', [PetugasUserController::class, 'deleteUser']);
+
+        // Export Excel
+        Route::get('/petugas/dashboard/export-data', [PetugasDashboardController::class, 'exportDataToExcel']);
+        Route::get('/petugas/rekap-ttd/export-data', [PetugasRekapTtdController::class, 'exportDataMonthToExcel']);
+        Route::get('/petugas/rekap-ttd-90/export-data', [PetugasRekapTtdController::class, 'exportData90ToExcel']);
+        Route::get('/petugas/rekap-hb/export-data', [PetugasRekapHbController::class, 'exportToExcel']);
+        Route::get('/petugas/rekap-gizi/export-data', [PetugasRekapGiziController::class, 'exportToExcel']);
     });
 });

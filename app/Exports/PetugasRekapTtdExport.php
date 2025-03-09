@@ -74,9 +74,10 @@ class PetugasRekapTtdExport implements FromCollection, WithHeadings
                 'user_id',
                 DB::raw('YEAR(tanggal_waktu) as tahun'),
                 DB::raw('MONTH(tanggal_waktu) as bulan'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / DAY(LAST_DAY(MAX(tanggal_waktu))) as rata_rata_perhari'),
-                DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
+                DB::raw('MAX(CASE WHEN total_tablet_diminum BETWEEN 1 AND 2 THEN total_tablet_diminum END) as max_tablet'),
+                DB::raw('SUM(total_tablet_diminum) as sum_tablet'),
+                DB::raw('SUM(minum_vit_c = 1) as count_vit_c_1'),
+                DB::raw('SUM(minum_vit_c = 0) as count_vit_c_0')
             ])
             ->whereNotNull('tanggal_waktu')
             ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
@@ -88,10 +89,14 @@ class PetugasRekapTtdExport implements FromCollection, WithHeadings
                     'No' => $globalIndex,
                     'Nama Ibu Hamil' => $item->user->name ?? '-',
                     'Puskesmas' => $item->user->wilayah_binaan ?? '-',
-                    'Kadar HB (g/dL) Terakhir' => $item->user->riwayat_hb->nilai_hb ?? '-',
-                    'Jumlah Tablet TTD Per Hari' => number_format($item->rata_rata_perhari, 2),
-                    'Total Jumlah TTD yang Dikonsumsi' => $item->total_tablet_diminum,
-                    'Vitamin C (Ya/Tidak)' => $item->lebih_banyak_vit_c ? 'Ya' : 'Tidak',
+                    'Kadar HB (g/dL)' => $item->user->riwayat_hb->nilai_hb ?? '-',
+                    'Jumlah Tablet TTD Per Hari' => $item->max_tablet,
+                    'Total Jumlah TTD yang Dikonsumsi' => $item->sum_tablet,
+                    'Vitamin C (Ya/Tidak)' => $item->count_vit_c_1 > $item->count_vit_c_0 
+                    ? "Vitamin C Diminum : {$item->count_vit_c_1} Kali" 
+                    : ($item->count_vit_c_0 > $item->count_vit_c_1 
+                        ? "Tidak minum Vitamin C : {$item->count_vit_c_0} Kali" 
+                        : "Vitamin C Diminum : {$item->count_vit_c_1}"),
                     'Bulan' => $item->bulan . '-' . $item->tahun,
                 ];
             });
@@ -108,7 +113,7 @@ class PetugasRekapTtdExport implements FromCollection, WithHeadings
             'No',
             'Nama Ibu Hamil',
             'Puskesmas',
-            'Kadar HB (g/dL) Terakhir',
+            'Kadar HB (g/dL)',
             'Jumlah Tablet TTD Per Hari',
             'Total Jumlah TTD yang Dikonsumsi',
             'Vitamin C (Ya/Tidak)',

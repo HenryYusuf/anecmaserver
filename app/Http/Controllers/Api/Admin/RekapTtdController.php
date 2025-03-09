@@ -94,19 +94,37 @@ class RekapTtdController extends BaseController
         //     ->get();
 
         // Rata rata perhari berdasarkan hari yang ada di bulan dikurangi dengan jumlah hari terakhir di bulan tersebut
-        // Untuk total tablet diminum
+        // // Untuk total tablet diminum
+        // $rekapKonsumsiTtd = KonsumsiTtd::with('user.riwayat_hb')
+        //     ->select([
+        //         'user_id',
+        //         DB::raw('YEAR(tanggal_waktu) as tahun'),
+        //         DB::raw('MONTH(tanggal_waktu) as bulan'),
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'), 
+        //         DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / DAY(LAST_DAY(MAX(tanggal_waktu))) as rata_rata_perhari'),
+        //         DB::raw('MAX(COALESCE(total_tablet_diminum, 0)) as max_tablet_per_hari'),
+        //         DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
+        //     ])
+        //     ->whereNotNull('tanggal_waktu')
+        //     ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
+        //     ->get();
+
+
+        // revisi
         $rekapKonsumsiTtd = KonsumsiTtd::with('user.riwayat_hb')
             ->select([
                 'user_id',
                 DB::raw('YEAR(tanggal_waktu) as tahun'),
                 DB::raw('MONTH(tanggal_waktu) as bulan'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) as total_tablet_diminum'),
-                DB::raw('SUM(COALESCE(total_tablet_diminum, 0)) / DAY(LAST_DAY(MAX(tanggal_waktu))) as rata_rata_perhari'),
-                DB::raw('SUM(CASE WHEN minum_vit_c = true THEN 1 ELSE 0 END) > SUM(CASE WHEN minum_vit_c = false THEN 1 ELSE 0 END) as lebih_banyak_vit_c')
+                DB::raw('MAX(CASE WHEN total_tablet_diminum BETWEEN 1 AND 2 THEN total_tablet_diminum END) as max_tablet'),
+                DB::raw('SUM(total_tablet_diminum) as sum_tablet'),
+                DB::raw('SUM(minum_vit_c = 1) as count_vit_c_1'),
+                DB::raw('SUM(minum_vit_c = 0) as count_vit_c_0')
             ])
             ->whereNotNull('tanggal_waktu')
             ->groupBy('user_id', DB::raw('YEAR(tanggal_waktu)'), DB::raw('MONTH(tanggal_waktu)'))
             ->get();
+
 
 
         return $this->sendResponse($rekapKonsumsiTtd, 'Rekap TTD retrieved successfully.');

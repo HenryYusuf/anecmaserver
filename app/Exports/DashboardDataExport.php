@@ -31,7 +31,7 @@ class DashboardDataExport implements FromCollection, WithHeadings
                 return [
                     'no' => $globalIndex,
                     'name' => $user->name,
-                    'puskesmas' => $user->puskesmas->puskesmas ?? '-',
+                    'puskesmas' => $user->wilayah_binaan ?? '-',
                     'usia' => $usia,
                     'resiko' => $user->resikoAnemia->first()->resiko ?? '-',
                     'ttd' => $jumlahTtd,

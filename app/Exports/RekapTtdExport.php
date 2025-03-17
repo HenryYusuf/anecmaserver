@@ -86,11 +86,11 @@ class RekapTtdExport implements FromCollection, WithHeadings
                     'Kadar HB (g/dL)' => $item->user->riwayat_hb->nilai_hb ?? '-',
                     'Jumlah Tablet TTD Per Hari' => $item->max_tablet,
                     'Total Jumlah TTD yang Dikonsumsi' => $item->sum_tablet,
-                    'Vitamin C (Ya/Tidak)' => $item->count_vit_c_1 > $item->count_vit_c_0 
-                    ? "Vitamin C Diminum : {$item->count_vit_c_1} Kali" 
-                    : ($item->count_vit_c_0 > $item->count_vit_c_1 
-                        ? "Tidak minum Vitamin C : {$item->count_vit_c_0} Kali" 
-                        : "Vitamin C Diminum : {$item->count_vit_c_1}"),
+                    'Vitamin C (Ya/Tidak)' => $item->count_vit_c_1 > $item->count_vit_c_0
+                        ? "Vitamin C Diminum : {$item->count_vit_c_1} Kali"
+                        : ($item->count_vit_c_0 > $item->count_vit_c_1
+                            ? "Tidak minum Vitamin C : {$item->count_vit_c_0} Kali"
+                            : "Vitamin C Diminum : {$item->count_vit_c_1}"),
                     'Bulan' => $item->bulan . '-' . $item->tahun,
                 ];
             });

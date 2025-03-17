@@ -156,12 +156,12 @@ class RekapGiziExport implements FromCollection, WithHeadings
             'Makan Malam Lauk Nabati (Porsi)',
             'Makan Malam Sayur (Porsi)',
             'Makan Malam Buah (Porsi)',
-            'Total Kalori Karbohidrat',
-            'Total Kalori Lauk Hewani',
-            'Total Kalori Lauk Nabati',
-            'Total Kalori Sayur',
-            'Total Kalori Buah',
-            'Total Kalori',
+            'Total Porsi Karbohidrat',
+            'Total Porsi Lauk Hewani',
+            'Total Porsi Lauk Nabati',
+            'Total Porsi Sayur',
+            'Total Porsi Buah',
+            'Total Porsi',
             'Konsumsi Gizi'
         ];
     }

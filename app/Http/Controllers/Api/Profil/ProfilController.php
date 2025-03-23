@@ -99,6 +99,7 @@ class ProfilController extends BaseController
             User::create([
                 'name' => $input['nama_suami'],
                 'email' => $input['email_suami'],
+                'no_hp' => $input['no_hp_suami'],
                 'password' => $passwordSuami,
                 'role' => 'suami'
             ]);

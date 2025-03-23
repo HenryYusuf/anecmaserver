@@ -80,13 +80,13 @@ class AuthController extends BaseController
 
     public function suamiLogin(Request $request)
     {
-        $checkUser = User::where('email', $request->email)->first();
+        $checkUser = User::where('email', $request->email)->orWhere('no_hp', $request->email)->first();
 
         if (!$checkUser || $checkUser->role != "suami") {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $checkUser->email, 'password' => $request->password])) {
             $user = Auth::user();
 
             if ($user->role !== 'suami') {

@@ -658,10 +658,10 @@ class JurnalMakanController extends BaseController
 
                 if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
                     // dd("1 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
-                    $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                    $pesan = "Bunda saat ini konsumsi makan Anda sudah <b>memenuhi gizi seimbang</b>, ayo pertahankan konsumsi makan gizi seimbang";
                 } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
                     // dd("2 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
-                    $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                    $pesan = "Bunda saat ini konsumsi makan Anda <b>tidak memenuhi gizi seimbang</b>, ayo tingkatkan konsumsi makan gizi seimbang";
                 } else {
                     // dd("Error");
                     $pesan = "Error";
@@ -672,18 +672,18 @@ class JurnalMakanController extends BaseController
                 if ($previousJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
                     if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
                         // dd("3 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
-                        $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                        $pesan = "Bunda saat ini konsumsi makan Anda sudah <b>memenuhi gizi seimbang</b>, ayo pertahankan konsumsi makan gizi seimbang";
                     } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
                         // dd("4 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
-                        $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                        $pesan = "Bunda saat ini konsumsi makan Anda <b>tidak memenuhi gizi seimbang</b>, ayo tingkatkan konsumsi makan gizi seimbang";
                     }
                 } else if ($previousJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
                     if ($checkJurnalMakanUser->hasil_gizi == "Gizi Seimbang") {
                         // dd("5 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
-                        $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                        $pesan = "Bunda saat ini konsumsi makan Anda sudah <b>memenuhi gizi seimbang</b>, ayo pertahankan konsumsi makan gizi seimbang";
                     } else if ($checkJurnalMakanUser->hasil_gizi == "Gizi Tidak Seimbang") {
                         // dd("6 Bunda saat ini konsumsi makan Anda masih belum memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
-                        $pesan = "Bunda saat ini konsumsi makan Anda masih belum memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                        $pesan = "Bunda saat ini konsumsi makan Anda masih <b>belum memenuhi gizi seimbang</b>, ayo tingkatkan konsumsi makan gizi seimbang";
                     } else {
                         // dd("Error");
                         $pesan = "Error";
@@ -728,10 +728,10 @@ class JurnalMakanController extends BaseController
 
             if ($hasil_gizi == "Gizi Seimbang") {
                 // dd("1 Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang");
-                $pesan = "Bunda saat ini konsumsi makan Anda sudah memenuhi gizi seimbang, ayo pertahankan konsumsi makan gizi seimbang";
+                $pesan = "Bunda saat ini konsumsi makan Anda sudah <b>memenuhi gizi seimbang</b>, ayo pertahankan konsumsi makan gizi seimbang";
             } else if ($hasil_gizi == "Gizi Tidak Seimbang") {
                 // dd("2 Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang");
-                $pesan = "Bunda saat ini konsumsi makan Anda tidak memenuhi gizi seimbang, ayo tingkatkan konsumsi makan gizi seimbang";
+                $pesan = "Bunda saat ini konsumsi makan Anda <b>tidak memenuhi gizi seimbang</b>, ayo tingkatkan konsumsi makan gizi seimbang";
             } else {
                 // dd("Error");
                 $pesan = "Error";

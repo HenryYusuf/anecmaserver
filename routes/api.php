@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\PetugasController;
 use App\Http\Controllers\Api\Admin\PuskesmasController;
 use App\Http\Controllers\Api\Admin\RekapGiziController;
 use App\Http\Controllers\Api\Admin\RekapHbController;
+use App\Http\Controllers\Api\Admin\RekapKalkulatorAnemiaController;
 use App\Http\Controllers\Api\Admin\RekapTtdController;
 use App\Http\Controllers\Api\Admin\SettingController;
 use App\Http\Controllers\Api\Admin\UploadImageController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Api\Petugas\AuthController as PetugasAuthController;
 use App\Http\Controllers\Api\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Api\Petugas\RekapGiziController as PetugasRekapGiziController;
 use App\Http\Controllers\Api\Petugas\RekapHbController as PetugasRekapHbController;
+use App\Http\Controllers\Api\Petugas\RekapKalkulatorAnemiaController as PetugasRekapKalkulatorAnemiaController;
 use App\Http\Controllers\Api\Petugas\RekapTtdController as PetugasRekapTtdController;
 use App\Http\Controllers\Api\Petugas\UserController as PetugasUserController;
 use App\Http\Controllers\Api\Profil\ProfilController;
@@ -120,6 +122,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Rekap HB
         Route::get('/admin/data/rekap-hb', [RekapHbController::class, 'getRekapHb']);
+
+        // Rekap Data Kalkulator Anemia
+        Route::get('/admin/data/rekap-kalkulator-anemia', [RekapKalkulatorAnemiaController::class, 'getRekapKalkulatorAnemia']);
         /* == End Admin Data Rekap == */
 
         // Admin Data Puskesmas
@@ -166,6 +171,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/rekap-ttd-90/export-data', [RekapTtdController::class, 'exportData90ToExcel']);
         Route::get('/admin/rekap-hb/export-data', [RekapHbController::class, 'exportToExcel']);
         Route::get('/admin/rekap-gizi/export-data', [RekapGiziController::class, 'exportToExcel']);
+        Route::get('/admin/rekap-kalkulator-anemia/export-data', [RekapKalkulatorAnemiaController::class, 'exportRekapKalkulatorAnemia']);
     });
 
     Route::middleware(PetugasMiddleware::class)->group(function () {
@@ -188,6 +194,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Rekap HB
         Route::get('/petugas/data/rekap-hb', [PetugasRekapHbController::class, 'getRekapHb']);
+
+        // Rekap Data Kalkulator Anemia
+        Route::get('/petugas/data/rekap-kalkulator-anemia', [PetugasRekapKalkulatorAnemiaController::class, 'getRekapKalkulatorAnemia']);
         /* == End Petugas Data Rekap == */
 
         // Petugas Data User
@@ -200,5 +209,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/petugas/rekap-ttd-90/export-data', [PetugasRekapTtdController::class, 'exportData90ToExcel']);
         Route::get('/petugas/rekap-hb/export-data', [PetugasRekapHbController::class, 'exportToExcel']);
         Route::get('/petugas/rekap-gizi/export-data', [PetugasRekapGiziController::class, 'exportToExcel']);
+        Route::get('/petugas/rekap-kalkulator-anemia/export-data', [PetugasRekapKalkulatorAnemiaController::class, 'exportRekapKalkulatorAnemia']);
     });
 });

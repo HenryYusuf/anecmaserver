@@ -18,7 +18,7 @@ class EdukasiController extends BaseController
         $user = Auth::user();
 
         // Check User Anemia by kalkulator/resiko anemia result
-        $cekResiko = ResikoAnemia::where('user_id', $user->id)->first();
+        $cekResiko = ResikoAnemia::where('user_id', $user->id)->latest()->first();
 
         // dd($cekResiko->resiko);
         if (!$cekResiko) {

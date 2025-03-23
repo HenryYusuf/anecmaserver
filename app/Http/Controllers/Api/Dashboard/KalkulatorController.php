@@ -125,9 +125,24 @@ class KalkulatorController extends BaseController
             $resiko_anemia = "tinggi";
         }
 
-        $resikoCreateOrUpdate = ResikoAnemia::updateOrCreate(
-            ['user_id' => $user->id],
+        // $resikoCreateOrUpdate = ResikoAnemia::updateOrCreate(
+        //     ['user_id' => $user->id],
+        //     [
+        //         'usia_kehamilan' => $weekPassed,
+        //         'jumlah_anak' => $input['jumlah_anak'],
+        //         'riwayat_anemia' => $input['riwayat_anemia'],
+        //         'hasil_gizi' => $checkJurnalMakanUser->hasil_gizi,
+        //         'konsumsi_ttd_7hari' => $input['konsumsi_ttd_7hari'],
+        //         'lingkar_lengan_atas' => $input['lingkar_lengan_atas'],
+        //         'hasil_hb' => $cekHb->nilai_hb,
+        //         'skor_resiko' => $total_score,
+        //         'resiko' => $resiko_anemia,
+        //     ]
+        // );
+
+        $createResiko = ResikoAnemia::create(
             [
+                'user_id' => $user->id,
                 'usia_kehamilan' => $weekPassed,
                 'jumlah_anak' => $input['jumlah_anak'],
                 'riwayat_anemia' => $input['riwayat_anemia'],
@@ -140,6 +155,6 @@ class KalkulatorController extends BaseController
             ]
         );
 
-        return $this->sendResponse($resikoCreateOrUpdate, 'Resiko created or updated successfully.');
+        return $this->sendResponse($createResiko, 'Resiko created or updated successfully.');
     }
 }

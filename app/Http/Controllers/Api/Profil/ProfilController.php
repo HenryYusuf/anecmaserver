@@ -87,13 +87,24 @@ class ProfilController extends BaseController
 
         $isEmailChanged = $user->email_suami !== $input['email_suami'];
 
-        $updatedUser = User::where('id', $user->id)->update([
-            'nama_suami' => $input['nama_suami'],
-            'no_hp_suami' => $input['no_hp_suami'],
-            'email_suami' => $input['email_suami'],
-        ]);
-
         if ($isEmailChanged) {
+
+            $existingUser = User::where('email', $input['email_suami'])->first();
+            if ($existingUser) {
+                return $this->sendError('Email sudah digunakan oleh pengguna lain.');
+            }
+
+            $oldEmail = User::where('email', $user->email_suami)->first();
+            if ($oldEmail) {
+                $oldEmail->delete();
+            }
+
+            $updatedUser = User::where('id', $user->id)->update([
+                'nama_suami' => $input['nama_suami'],
+                'no_hp_suami' => $input['no_hp_suami'],
+                'email_suami' => $input['email_suami'],
+            ]);
+
             $passwordSuami = bcrypt('suami123');
 
             User::create([

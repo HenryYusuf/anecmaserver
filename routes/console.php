@@ -133,7 +133,7 @@ Schedule::call(function () {
 
             // Mengirim pesan dengan gambar melalui API WhatsApp
             dispatch(function () use ($waAPI, $formattedNoHp, $image) {
-                $waAPI->sendMediaFromUrl($formattedNoHp, $image, 'Notifikasi ANECMA \n\n*"Bunda sehat, si kecil kuat! Yuk, minum tablet tambah darah sekarang! 😊"* \n\nKalau sudah minum tabletnya, jangan lupa isi di sini ya, Bun! \n\nhttps://www.anecma.id/istri/dashboard/konsumsi-ttd', "Reminder TTD");
+                $waAPI->sendMediaFromUrl($formattedNoHp, $image, 'Notifikasi ANECMA \n\n*"Bunda sehat, si kecil kuat! Yuk, minum tablet tambah darah sekarang! 😊"* \n\nKalau sudah minum tabletnya, jangan lupa isi Buku KIA dan di sini ya, Bun! \n\nhttps://www.anecma.id/istri/dashboard/konsumsi-ttd', "Reminder TTD");
             });
         }
     }

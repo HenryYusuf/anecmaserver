@@ -37,8 +37,7 @@ class KalkulatorController extends BaseController
 
         // Cek usia kehamilan berdasar trisemester
         $hariPertamaHaid = $user->hari_pertama_haid;
-        // $startDate = Carbon::create($hariPertamaHaid);
-        $startDate = Carbon::create(2023, 9, 1);
+        $startDate = Carbon::create($hariPertamaHaid);
         $currentDate = Carbon::now();
         $weekPassed = floor($startDate->diffInWeeks($currentDate));
 

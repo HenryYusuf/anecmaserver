@@ -47,4 +47,18 @@ class ReminderTtdController extends BaseController
 
         return $this->sendResponse($reminderCreateOrUpdated, 'Reminder TTD created or updated successfully.');
     }
+
+    public function turnOffReminderTtd()
+    {
+        $user = Auth::user();
+
+        $reminder = ReminderTtd::where('user_id', $user->id)->first();
+
+        $reminder->update([
+            'is_active_reminder_1' => 0,
+            'is_active_reminder_2' => 0,
+        ]);
+
+        return $this->sendResponse($reminder, 'Reminder TTD turned off successfully.');
+    }
 }

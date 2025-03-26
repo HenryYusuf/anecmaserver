@@ -99,7 +99,7 @@ Route::get('/', function () {
 
     $hariHaid = "2024-09-01";
     $startDate = Carbon::create($hariHaid);
-    $currentDate = Carbon::now();
+    $currentDate = "2024-10-18";
 
 
     $weekPassed = $startDate->diffInWeeks($currentDate);

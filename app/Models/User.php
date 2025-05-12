@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(ResikoAnemia::class);
     }
 
+    public function resikoAnemiaTerbaru()
+    {
+        return $this->hasOne(ResikoAnemia::class)->latestOfMany();
+    }
+
     public function puskesmas()
     {
         return $this->belongsToMany(Puskesmas::class, 'petugas_puskesmas', 'user_id', 'puskesmas_id');

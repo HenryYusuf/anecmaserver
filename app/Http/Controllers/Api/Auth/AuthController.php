@@ -62,7 +62,7 @@ class AuthController extends BaseController
     {
         $user = Auth::user();
 
-        $userData = User::where('email', $user->email)->with('resikoAnemia', 'riwayat_hb')->first();
+        $userData = User::where('email', $user->email)->with('resikoAnemiaTerbaru', 'riwayat_hb')->first();
 
         $hariPertamaHaid = $userData->hari_pertama_haid;
         $startDate = Carbon::create($hariPertamaHaid);
